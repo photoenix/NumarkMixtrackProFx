@@ -1,19 +1,11 @@
-//
-//
-//
-
 var MixtrackProFX = {};
 
-//
 //	initialization
-//
 MixtrackProFX.init = function(id, debug){
-	//
 	MixtrackProFX.effect = new components.ComponentContainer();
 	MixtrackProFX.effect[1] = new MixtrackProFX.EffectUnit(1);
 	MixtrackProFX.effect[2] = new MixtrackProFX.EffectUnit(2);
 	
-	//
 	MixtrackProFX.deck = new components.ComponentContainer();
 	MixtrackProFX.deck[1] = new MixtrackProFX.Deck(1, 0, MixtrackProFX.effect[1]);
 	MixtrackProFX.deck[2] = new MixtrackProFX.Deck(2, 1, MixtrackProFX.effect[2]);
@@ -21,11 +13,9 @@ MixtrackProFX.init = function(id, debug){
 	MixtrackProFX.browse = new MixtrackProFX.Browse();
 	MixtrackProFX.headGain = new MixtrackProFX.HeadGain();
 	
-	//
 	var exitDemoSysex = [0xF0, 0x7E, 0x00, 0x06, 0x01, 0xF7];
 	midi.sendSysexMsg(exitDemoSysex, exitDemoSysex.length);
 	
-	//
 	var statusSysex = [0xF0, 0x00, 0x20, 0x7F, 0x03, 0x01, 0xF7];
 	midi.sendSysexMsg(statusSysex, statusSysex.length);
 	
@@ -51,7 +41,6 @@ MixtrackProFX.init = function(id, debug){
 		MixtrackProFX.wheel[i] = true;
 	}
 	
-	//
 	midi.sendShortMsg(0x88, 0x09, 0x01);	//	tap
 	
 	midi.sendShortMsg(0x88, 0x00, 0x01);	//	hpf
@@ -65,22 +54,17 @@ MixtrackProFX.init = function(id, debug){
 	midi.sendShortMsg(0xB0, 0x1F, 0x00);
 	midi.sendShortMsg(0xB1, 0x1F, 0x00);
 	
-	//
 	engine.makeConnection("[Channel1]", "VuMeter", MixtrackProFX.vuCallback);
     engine.makeConnection("[Channel2]", "VuMeter", MixtrackProFX.vuCallback);
 };
 
-//
 //	shutdown
-//
 MixtrackProFX.shutdown = function(){
 	var shutdownSysex = [0xF0, 0x00, 0x20, 0x7F, 0x02, 0xF7];
 	midi.sendSysexMsg(shutdownSysex, shutdownSysex.length);
 };
 
-//
 //	effect
-//
 MixtrackProFX.EffectUnit = function(unitNumber) {
 	var eu = this;
     this.unitNumber = unitNumber;
@@ -135,9 +119,7 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 };
 MixtrackProFX.EffectUnit.prototype = new components.ComponentContainer();
 
-//
 //	deck
-//
 MixtrackProFX.Deck = function(number, channel, effect){
 	var deck = this;
 	var eu = effect;
@@ -304,9 +286,7 @@ MixtrackProFX.Deck = function(number, channel, effect){
 };
 MixtrackProFX.Deck.prototype = new components.Deck();
 
-//
 //	browse
-//
 MixtrackProFX.Browse = function(){
 	this.knob = new components.Encoder({
 		group: '[Library]',
@@ -339,9 +319,6 @@ MixtrackProFX.Browse = function(){
 };
 MixtrackProFX.Browse.prototype = new components.ComponentContainer();
 
-//
-//
-//
 MixtrackProFX.HeadGain = function(){
 	components.Pot.call(this);
 };
@@ -350,9 +327,6 @@ MixtrackProFX.HeadGain.prototype = new components.Pot({
 	inKey: 'headGain',
 });
 
-//
-//
-//
 MixtrackProFX.wheel = [];
 MixtrackProFX.wheelToggle = function(channel, control, value, status, group){
 	if(value != 0x7F){
@@ -370,9 +344,6 @@ MixtrackProFX.wheelToggle = function(channel, control, value, status, group){
 	midi.sendShortMsg(0x90 | channel, 0x07, onOff);
 };
 
-//
-//
-//
 MixtrackProFX.scratch_timer = [];
 MixtrackProFX.scratch_tick = [];
 MixtrackProFX.startScratchTimer = function(deck){
@@ -430,9 +401,6 @@ MixtrackProFX.scratchDisable = function(deck){
 	engine.scratchDisable(deck, false);
 };
 
-//
-//
-//
 MixtrackProFX.scratch_direction = [null, null, null];
 MixtrackProFX.scratch_accumulator = [0, 0, 0];
 MixtrackProFX.last_scratch_tick = [0, 0, 0];
@@ -489,9 +457,6 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group){
 	MixtrackProFX.scratch_direction[deck] = direction;
 	MixtrackProFX.scratch_accumulator[deck] += Math.abs(newValue);
 	
-	//
-	//
-	//
 	if (engine.isScratching(deck)) {
 		engine.scratchTick(deck, newValue);
 		MixtrackProFX.resetScratchTimer(deck, newValue);
@@ -510,9 +475,6 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group){
 	}
 };
 
-//
-//
-//
 MixtrackProFX.touching = [false, false, false];
 MixtrackProFX.searching = [false, false, false];
 MixtrackProFX.wheelTouch = function(channel, control, value, status, group){
@@ -547,9 +509,6 @@ MixtrackProFX.wheelTouch = function(channel, control, value, status, group){
 	}
 };
 
-//
-//
-//
 MixtrackProFX.vuCallback = function(value, group, control) {
 	var level = value * 90;
 	
