@@ -124,6 +124,9 @@ MixtrackProFX.EffectUnit.prototype = new components.ComponentContainer();
 MixtrackProFX.Deck = function(number, channel, effect) {
 	var deck = this;
 
+	this.loopEnabled = false;
+	this.loopInSet = false;
+
 	components.Deck.call(this, number);
 
 	this.playButton = new components.PlayButton({
@@ -247,36 +250,46 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 	this.loop = new components.Button({
 		group: this.currentDeck,
-		off: 0x01,
-		inKey: 'beatloop_4_toggle',
-		unshift: function() {
-			this.inKey = 'beatloop_4_toggle';
-		},
-		shift: function() {
-			this.inKey = 'loop_enabled';
-		},
+		input: function() {
+			if (deck.loopEnabled)
+				script.triggerControl(this.group, "beatlooproll_activate");
+			else
+				script.triggerControl(this.group, "beatloop_activate");
+
+			deck.loopEnabled = !deck.loopEnabled;
+		}
+	});
+
+	this.reloop = new components.Button({
+		group: this.currentDeck,
+		inKey: "loop_in_goto"
 	});
 
 	this.loopHalf = new components.Button({
 		group: this.currentDeck,
-		inKey: 'loop_halve',
-		unshift: function() {
-			this.inKey = 'loop_halve';
-		},
-		shift: function() {
-			this.inKey = 'loop_in';
-		},
+		inKey: "loop_halve"
 	});
 
 	this.loopDouble = new components.Button({
 		group: this.currentDeck,
-		inKey: 'loop_double',
-		unshift: function() {
-			this.inKey = 'loop_double';
-		},
-		shift: function() {
-			this.inKey = 'loop_out';
-		},
+		inKey: "loop_double"
+	});
+
+	this.loopIn = new components.Button({
+		group: this.currentDeck,
+		input: function() {
+			script.triggerControl(this.group, "loop_in");
+			deck.loopInSet = true;
+		}
+	});
+
+	this.loopOut = new components.Button({
+		group: this.currentDeck,
+		input: function() {
+			if (!deck.loopInSet) return;
+			script.triggerControl(this.group, "loop_out");
+			deck.loopEnabled = true;
+		}
 	});
 
 	this.reconnectComponents(function(component) {

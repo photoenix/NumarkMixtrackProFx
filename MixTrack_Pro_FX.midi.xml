@@ -302,6 +302,24 @@
                 </options>
             </control>
             <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[2].loopOut.input</key>
+                <status>0x95</status>
+                <midino>0x37</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[1].loopOut.input</key>
+                <status>0x94</status>
+                <midino>0x37</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
                 <group>[EffectRack1_EffectUnit1]</group>
                 <key>MixtrackProFX.effect[1].dryWetKnob.input</key>
                 <status>0xB8</status>
@@ -375,6 +393,15 @@
             </control>
             <control>
                 <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[2].loopIn.input</key>
+                <status>0x95</status>
+                <midino>0x36</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
                 <key>MixtrackProFX.deck[2].loadButton.input</key>
                 <status>0x9F</status>
                 <midino>0x03</midino>
@@ -387,6 +414,15 @@
                 <key>MixtrackProFX.deck[1].loopHalf.input</key>
                 <status>0x94</status>
                 <midino>0x34</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[1].loopIn.input</key>
+                <status>0x94</status>
+                <midino>0x36</midino>
                 <options>
                     <script-binding/>
                 </options>
@@ -446,10 +482,28 @@
                 </options>
             </control>
             <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[2].reloop.input</key>
+                <status>0x95</status>
+                <midino>0x41</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
                 <group>[Channel1]</group>
                 <key>MixtrackProFX.deck[1].loop.input</key>
                 <status>0x94</status>
                 <midino>0x40</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[1].reloop.input</key>
+                <status>0x94</status>
+                <midino>0x41</midino>
                 <options>
                     <script-binding/>
                 </options>

@@ -10,9 +10,15 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * Cue
   * Sync
   * Load track
+  * Switch between tree and track list (library knob press)
+  * Select item (shift + library knob press)
   * Scratch toggle
   * FX on/off
   * PFL/headphone cue
+  * Loop toggle
+  * Reloop (shift)
+  * Loop half/double
+  * Loop in/out (shift)
 * Knobs
   * Master gain
   * Mic gain
@@ -32,7 +38,6 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
 
 ### Kinda working
 * Pads (hot cue)
-* Loop toggle
 
 ### Not working
 * Pitch bend up/down
@@ -40,8 +45,6 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
 * Software FX (HPF/LPF/Flanger/Echo/Reverb/Phaser)
 * Pad mode switches (cue/auto loop/fader cuts/samples)
 * Tap BPM
-* Loop half/double
-* Loop in/out
 * Bleep
 
 ## Notes
