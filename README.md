@@ -3,45 +3,46 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
 ![Pro FX photo](https://www.numark.com/images/product_large/Numark_MixtrackProFX_ortho_web.jpg)
 
 ## Features
+
 ### Working
-* Master Gain
-* Mic Gain
-* Cue Mix
-* Cue Gain
-* Master Output LEDs
-* Load
-* Pre-fader Level
-* EQ (high/mid/low)
-* Filter
-* Cue/PFL level
-* Channel Fader
-* Crossfader
-* Pitch Fader
-* FX Wet/Dry Knob
-* FX On/Off
-* Platter/Jog Wheel
-  * Pitch
-  * Scratch
-* Scratch Button
-* Sync
-* Cue
-* Play/Pause
-* Hot Cue
+* Buttons
+  * Play/pause
+  * Cue
+  * Sync
+  * Load track
+  * Scratch toggle
+  * FX on/off
+  * PFL/headphone cue
+* Knobs
+  * Master gain
+  * Mic gain
+  * Cue mix
+  * Cue/PFL level
+  * Pre-fader Level
+  * EQ (high/mid/low)
+  * Filter
+  * FX dry/wet
+  * Browse
+* Sliders
+  * Channel fader
+  * Crossfader
+  * Pitch fader
+* Master VU meter
+* Jog wheel (pitch/scratch)
+
 ### Kinda working
-* Shift
-* Browse Knob
-* Pads
-* Loop On/Off
-* Loop 1/2
-* Loop x2
+* Pads (hot cue)
+* Loop toggle
+
 ### Not working
-* Pitch Bend up/down
-* Beats Multiplier
+* Pitch bend up/down
+* Beats multiplier knob
 * Software FX (HPF/LPF/Flanger/Echo/Reverb/Phaser)
+* Pad mode switches (cue/auto loop/fader cuts/samples)
 * Tap BPM
-* Auto Loop
-* Fader Cuts
-* Sampler
+* Loop half/double
+* Loop in/out
+* Bleep
 
 ## Notes
 Please note that the Pro FX is my first controller and I'm very new to DJing, so I may not know how some advanced controller features are supposed to work like. I'm just trying to replicate the controller's behaviour inside VirtualDJ. Also, I don't know if it's just me, but I find the Mixxx scripting API extremely confusing, so there might be some stupid mistakes in code.
