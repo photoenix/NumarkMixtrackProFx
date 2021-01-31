@@ -1,4 +1,14 @@
+/*
+Known bugs:
+* Rapidly pressing the loop button causes inconsistent led state (e.g. loop enabled, but led is off). Probably a timing issue with getValue() or something.
+*/
+
 var MixtrackProFX = {};
+
+function setLoopLed(group, channel) {
+	var ledValue = engine.getValue(group, "loop_enabled") == 1 ? 0x7F : 0x01;
+	midi.sendShortMsg(0x94 | channel, 0x40, ledValue);
+}
 
 // initialization
 MixtrackProFX.init = function(id, debug) {
@@ -35,7 +45,7 @@ MixtrackProFX.init = function(id, debug) {
 
 		midi.sendShortMsg(0x94 | i, 0x34, 0x01); // half
 		midi.sendShortMsg(0x94 | i, 0x35, 0x01); // double
-		midi.sendShortMsg(0x94 | i, 0x40, 0x01); // loop
+		setLoopLed(i);
 
 		// wheel
 		MixtrackProFX.wheel[i] = true;
@@ -123,9 +133,6 @@ MixtrackProFX.EffectUnit.prototype = new components.ComponentContainer();
 // deck
 MixtrackProFX.Deck = function(number, channel, effect) {
 	var deck = this;
-
-	this.loopEnabled = false;
-	this.loopInSet = false;
 
 	components.Deck.call(this, number);
 
@@ -250,13 +257,13 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 	this.loop = new components.Button({
 		group: this.currentDeck,
-		input: function() {
-			if (deck.loopEnabled)
-				script.triggerControl(this.group, "beatlooproll_activate");
-			else
+		input: function(channel, control, value, status, group) {
+			if (engine.getValue(group, "loop_enabled") == 0)
 				script.triggerControl(this.group, "beatloop_activate");
+			else
+				script.triggerControl(this.group, "beatlooproll_activate");
 
-			deck.loopEnabled = !deck.loopEnabled;
+			setLoopLed(group, channel);
 		}
 	});
 
@@ -277,18 +284,17 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 	this.loopIn = new components.Button({
 		group: this.currentDeck,
-		input: function() {
+		input: function(channel, control, value, status, group) {
 			script.triggerControl(this.group, "loop_in");
-			deck.loopInSet = true;
+			setLoopLed(group, channel);
 		}
 	});
 
 	this.loopOut = new components.Button({
 		group: this.currentDeck,
-		input: function() {
-			if (!deck.loopInSet) return;
+		input: function(channel, control, value, status, group) {
 			script.triggerControl(this.group, "loop_out");
-			deck.loopEnabled = true;
+			setLoopLed(group, channel);
 		}
 	});
 
