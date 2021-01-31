@@ -25,7 +25,7 @@ MixtrackProFX.init = function(id, debug) {
 		midi.sendShortMsg(0x90 | i, 0x00, 0x01); // play
 		midi.sendShortMsg(0x90 | i, 0x01, 0x01); // cue
 		midi.sendShortMsg(0x90 | i, 0x02, 0x01); // sync
-		midi.sendShortMsg(0x90 | i, 0x07, 0x01); // scratch
+		midi.sendShortMsg(0x90 | i, 0x07, 0x7f); // scratch
 		midi.sendShortMsg(0x90 | i, 0x1B, 0x01); // pfl
 
 		midi.sendShortMsg(0x94 | i, 0x00, 0x01); // cue
@@ -33,8 +33,8 @@ MixtrackProFX.init = function(id, debug) {
 		midi.sendShortMsg(0x94 | i, 0x07, 0x01); // fader
 		midi.sendShortMsg(0x94 | i, 0x0B, 0x01); // sample
 
-		midi.sendShortMsg(0x94 | i, 0x34, 0x04); // half
-		midi.sendShortMsg(0x94 | i, 0x35, 0x04); // double
+		midi.sendShortMsg(0x94 | i, 0x34, 0x01); // half
+		midi.sendShortMsg(0x94 | i, 0x35, 0x01); // double
 		midi.sendShortMsg(0x94 | i, 0x40, 0x01); // loop
 
 		// wheel
