@@ -354,9 +354,9 @@ MixtrackProFX.startScratchTimer = function(deck) {
 		return;
 
 	MixtrackProFX.scratch_tick[deck] = 0;
-	MixtrackProFX.scratch_timer[deck] = engine.beginTimer(20, function(){
-		MixtrackProFX.scratchTimerCallback(deck);
-	});
+	//MixtrackProFX.scratch_timer[deck] = engine.beginTimer(20, function(){
+	//	MixtrackProFX.scratchTimerCallback(deck);
+	//});
 };
 
 MixtrackProFX.stopScratchTimer = function(deck) {
@@ -373,7 +373,7 @@ MixtrackProFX.resetScratchTimer = function(deck, tick) {
 	MixtrackProFX.scratch_tick[deck] = tick;
 };
 
-MixtrackProFX.scratchTimerCallback = function(deck){
+/*MixtrackProFX.scratchTimerCallback = function(deck){
 	if((MixtrackProFX.scratch_direction[deck]
 		&& Math.abs(MixtrackProFX.scratch_tick[deck]) > 2)
 		|| (!MixtrackProFX.scratch_direction[deck]
@@ -384,7 +384,7 @@ MixtrackProFX.scratchTimerCallback = function(deck){
 	}
 
 	MixtrackProFX.scratchDisable(deck);
-};
+};*/
 
 MixtrackProFX.scratchEnable = function(deck) {
 	var alpha = 1.0/8;
