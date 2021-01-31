@@ -45,7 +45,7 @@ MixtrackProFX.init = function(id, debug) {
 
 		midi.sendShortMsg(0x94 | i, 0x34, 0x01); // half
 		midi.sendShortMsg(0x94 | i, 0x35, 0x01); // double
-		setLoopLed(i);
+		midi.sendShortMsg(0x94 | i, 0x40, 0x01); // loop
 
 		// wheel
 		MixtrackProFX.wheel[i] = true;
