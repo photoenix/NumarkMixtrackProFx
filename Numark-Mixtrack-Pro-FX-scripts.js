@@ -310,13 +310,12 @@ MixtrackProFX.Browse = function() {
 
 	this.button = new components.Button({
 		group: '[Library]',
-		inKey: 'GoToItem',
-		unshift: function() {
-			this.inKey = 'GoToItem';
-		},
-		shift: function() {
-			this.inKey = 'MoveFocusForward';
-		},
+		inKey: 'MoveFocusForward'
+	});
+
+	this.buttonShift = new components.Button({
+		group: '[Library]',
+		inKey: 'GoToItem'
 	});
 };
 
