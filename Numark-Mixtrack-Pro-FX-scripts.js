@@ -55,7 +55,7 @@ MixtrackProFX.init = function(id, debug){
 	midi.sendShortMsg(0xB1, 0x1F, 0x00);
 	
 	engine.makeConnection("[Channel1]", "VuMeter", MixtrackProFX.vuCallback);
-    engine.makeConnection("[Channel2]", "VuMeter", MixtrackProFX.vuCallback);
+	engine.makeConnection("[Channel2]", "VuMeter", MixtrackProFX.vuCallback);
 };
 
 //	shutdown
@@ -67,9 +67,9 @@ MixtrackProFX.shutdown = function(){
 //	effect
 MixtrackProFX.EffectUnit = function(unitNumber) {
 	var eu = this;
-    this.unitNumber = unitNumber;
+	this.unitNumber = unitNumber;
 
-    this.setCurrentUnit = function(newNumber) {
+	this.setCurrentUnit = function(newNumber) {
 		this.currentUnitNumber = newNumber;
 		this.group = '[EffectRack1_EffectUnit' + newNumber + ']';
 		
@@ -131,11 +131,11 @@ MixtrackProFX.Deck = function(number, channel, effect){
 		off: 0x01,
 		unshift: function() {
 			components.PlayButton.prototype.unshift.call(this);
-            this.type = components.Button.prototype.types.toggle;
+			this.type = components.Button.prototype.types.toggle;
 		},
 		shift: function() {
 			this.inKey = 'play_stutter';
-            this.type = components.Button.prototype.types.push;
+			this.type = components.Button.prototype.types.push;
 		},
 	});
 	
@@ -518,14 +518,14 @@ MixtrackProFX.vuCallback = function(value, group, control) {
 		if (group == '[Channel1]') {
 			midi.sendShortMsg(0xB0, 0x1F, level);
 		}
-        else if (group == '[Channel2]') {
+		else if (group == '[Channel2]') {
 			midi.sendShortMsg(0xB1, 0x1F, level);
 		}
 	}
 	else if (group == '[Channel1]') {
 		midi.sendShortMsg(0xB0, 0x1F, level);
-    }
-    else if (group == '[Channel2]') {
+	}
+	else if (group == '[Channel2]') {
 		midi.sendShortMsg(0xB1, 0x1F, level);
-    }
+	}
 };
