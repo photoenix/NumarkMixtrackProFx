@@ -1,7 +1,7 @@
 var MixtrackProFX = {};
 
 // initialization
-MixtrackProFX.init = function(id, debug){
+MixtrackProFX.init = function(id, debug) {
 	MixtrackProFX.effect = new components.ComponentContainer();
 	MixtrackProFX.effect[1] = new MixtrackProFX.EffectUnit(1);
 	MixtrackProFX.effect[2] = new MixtrackProFX.EffectUnit(2);
@@ -20,7 +20,7 @@ MixtrackProFX.init = function(id, debug){
 	midi.sendSysexMsg(statusSysex, statusSysex.length);
 
 	// initialize channels
-	for(var i = 0; i < 2; i++){
+	for(var i = 0; i < 2; i++) {
 		// LEDS
 		midi.sendShortMsg(0x90 | i, 0x00, 0x01); // play
 		midi.sendShortMsg(0x90 | i, 0x01, 0x01); // cue
@@ -41,8 +41,9 @@ MixtrackProFX.init = function(id, debug){
 		MixtrackProFX.wheel[i] = true;
 	}
 
-	midi.sendShortMsg(0x88, 0x09, 0x01); // tap
+	midi.sendShortMsg(0x88, 0x09, 0x01); // tap led
 
+	// effect leds
 	midi.sendShortMsg(0x88, 0x00, 0x01); // hpf
 	midi.sendShortMsg(0x88, 0x01, 0x01); // lpf
 	midi.sendShortMsg(0x88, 0x02, 0x01); // flanger
@@ -50,7 +51,7 @@ MixtrackProFX.init = function(id, debug){
 	midi.sendShortMsg(0x89, 0x04, 0x01); // reverb
 	midi.sendShortMsg(0x89, 0x05, 0x01); // phaser
 
-	// vumeters off
+	// vumeters leds (off)
 	midi.sendShortMsg(0xB0, 0x1F, 0x00);
 	midi.sendShortMsg(0xB1, 0x1F, 0x00);
 
@@ -59,7 +60,7 @@ MixtrackProFX.init = function(id, debug){
 };
 
 // shutdown
-MixtrackProFX.shutdown = function(){
+MixtrackProFX.shutdown = function() {
 	var shutdownSysex = [0xF0, 0x00, 0x20, 0x7F, 0x02, 0xF7];
 	midi.sendSysexMsg(shutdownSysex, shutdownSysex.length);
 };
@@ -115,14 +116,13 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 			component.group = eu.group;
 		}
 	});
-
 };
+
 MixtrackProFX.EffectUnit.prototype = new components.ComponentContainer();
 
 // deck
-MixtrackProFX.Deck = function(number, channel, effect){
+MixtrackProFX.Deck = function(number, channel, effect) {
 	var deck = this;
-	var eu = effect;
 
 	components.Deck.call(this, number);
 
@@ -158,10 +158,10 @@ MixtrackProFX.Deck = function(number, channel, effect){
 
 	this.loadButton = new components.Button({
 		inKey: 'LoadSelectedTrack',
-		shift: function(){
+		shift: function() {
 			this.inKey = 'LoadSelectedTrackAndPlay';
 		},
-		unshift: function(){
+		unshift: function() {
 			this.inKey = 'LoadSelectedTrack';
 		},
 	});
@@ -172,7 +172,7 @@ MixtrackProFX.Deck = function(number, channel, effect){
 		inKey: 'volume',
 	});
 
-	this.EqEffectKnob = function(group, inKey, fxKey, filter){
+	this.EqEffectKnob = function(group, inKey, fxKey, filter) {
 		this.unshiftGroup = group;
 		this.unshiftKey = inKey;
 		this.fxKey = fxKey;
@@ -188,6 +188,7 @@ MixtrackProFX.Deck = function(number, channel, effect){
 			inKey: inKey,
 		});
 	};
+
 	this.EqEffectKnob.prototype = new components.Pot({
 	});
 
@@ -215,7 +216,7 @@ MixtrackProFX.Deck = function(number, channel, effect){
 
 	this.hotcueButton = new components.ComponentContainer();
 
-	for(var i = 1; i <= 4; i++){
+	for(var i = 1; i <= 4; i++) {
 		this.hotcueButton[i] = new components.HotcueButton({
 			midi: [0x94 + channel, 0x14 + i - 1],
 			number: i,
@@ -228,9 +229,9 @@ MixtrackProFX.Deck = function(number, channel, effect){
 		midi: [0x90 + channel, 0x20, 0x80 + channel, 0x20],
 		type: components.Button.prototype.types.powerWindow,
 		state: false,
-		inToggle: function(){
-			this.state=!this.state;
-			if(this.state){
+		inToggle: function() {
+			this.state = !this.state;
+			if(this.state) {
 				deck.shift();
 				MixtrackProFX.browse.shift();
 				//MixtrackProFX.headGain.shift();
@@ -278,16 +279,17 @@ MixtrackProFX.Deck = function(number, channel, effect){
 		},
 	});
 
-	this.reconnectComponents(function(component){
-		if(component.group === undefined){
+	this.reconnectComponents(function(component) {
+		if(component.group === undefined) {
 			component.group = this.currentDeck;
 		}
 	});
 };
+
 MixtrackProFX.Deck.prototype = new components.Deck();
 
 // browse
-MixtrackProFX.Browse = function(){
+MixtrackProFX.Browse = function() {
 	this.knob = new components.Encoder({
 		group: '[Library]',
 		inKey: 'Move',
@@ -317,39 +319,39 @@ MixtrackProFX.Browse = function(){
 		},
 	});
 };
+
 MixtrackProFX.Browse.prototype = new components.ComponentContainer();
 
-MixtrackProFX.HeadGain = function(){
+MixtrackProFX.HeadGain = function() {
 	components.Pot.call(this);
 };
+
 MixtrackProFX.HeadGain.prototype = new components.Pot({
 	group: '[Master]',
 	inKey: 'headGain',
 });
 
 MixtrackProFX.wheel = [];
-MixtrackProFX.wheelToggle = function(channel, control, value, status, group){
-	if(value != 0x7F){
-		return;
-	}
+
+MixtrackProFX.wheelToggle = function(channel, control, value, status, group) {
+	if(value != 0x7F) return;
 
 	MixtrackProFX.wheel[channel] = !MixtrackProFX.wheel[channel];
 
 	var onOff = 0x01;
 
-	if(MixtrackProFX.wheel[channel]){
+	if(MixtrackProFX.wheel[channel])
 		onOff = 0x7F;
-	}
 
 	midi.sendShortMsg(0x90 | channel, 0x07, onOff);
 };
 
 MixtrackProFX.scratch_timer = [];
 MixtrackProFX.scratch_tick = [];
-MixtrackProFX.startScratchTimer = function(deck){
-	if(MixtrackProFX.scratch_timer[deck]){
+
+MixtrackProFX.startScratchTimer = function(deck) {
+	if(MixtrackProFX.scratch_timer[deck])
 		return;
-	}
 
 	MixtrackProFX.scratch_tick[deck] = 0;
 	MixtrackProFX.scratch_timer[deck] = engine.beginTimer(20, function(){
@@ -357,18 +359,16 @@ MixtrackProFX.startScratchTimer = function(deck){
 	});
 };
 
-MixtrackProFX.stopScratchTimer = function(deck){
-	if(MixtrackProFX.scratch_timer[deck]){
+MixtrackProFX.stopScratchTimer = function(deck) {
+	if(MixtrackProFX.scratch_timer[deck])
 		engine.stopTimer(MixtrackProFX.scratch_timer[deck]);
-	}
 
 	MixtrackProFX.scratch_timer[deck] = null;
 };
 
-MixtrackProFX.resetScratchTimer = function(deck, tick){
-	if(!MixtrackProFX.scratch_timer[deck]){
+MixtrackProFX.resetScratchTimer = function(deck, tick) {
+	if(!MixtrackProFX.scratch_timer[deck])
 		return;
-	}
 
 	MixtrackProFX.scratch_tick[deck] = tick;
 };
@@ -386,7 +386,7 @@ MixtrackProFX.scratchTimerCallback = function(deck){
 	MixtrackProFX.scratchDisable(deck);
 };
 
-MixtrackProFX.scratchEnable = function(deck){
+MixtrackProFX.scratchEnable = function(deck) {
 	var alpha = 1.0/8;
 	var beta = alpha/32;
 
@@ -395,7 +395,7 @@ MixtrackProFX.scratchEnable = function(deck){
 	MixtrackProFX.stopScratchTimer(deck);
 };
 
-MixtrackProFX.scratchDisable = function(deck){
+MixtrackProFX.scratchDisable = function(deck) {
 	MixtrackProFX.searching[deck] = false;
 	MixtrackProFX.stopScratchTimer(deck);
 	engine.scratchDisable(deck, false);
@@ -404,37 +404,33 @@ MixtrackProFX.scratchDisable = function(deck){
 MixtrackProFX.scratch_direction = [null, null, null];
 MixtrackProFX.scratch_accumulator = [0, 0, 0];
 MixtrackProFX.last_scratch_tick = [0, 0, 0];
-MixtrackProFX.wheelTurn = function(channel, control, value, status, group){
+
+MixtrackProFX.wheelTurn = function(channel, control, value, status, group) {
 	var deck = channel + 1;
 	var direction;
 	var newValue;
 
-	if(value < 64){
+	if(value < 64)
 		direction = true;
-	} else {
+	else
 		direction = false;
-	}
 
 	var delta = Math.abs(MixtrackProFX.last_scratch_tick[deck] - value);
-	if (MixtrackProFX.scratch_direction[deck] !== null && MixtrackProFX.scratch_direction[deck] != direction && delta < 64) {
+	if (MixtrackProFX.scratch_direction[deck] !== null && MixtrackProFX.scratch_direction[deck] != direction && delta < 64)
 		direction = !direction;
-	}
 
-	if (direction) {
+	if (direction)
 		newValue = value;
-	} else {
+	else
 		newValue = value - 128;
-	}
 
-	if(MixtrackProFX.searching[deck]){
+	if(MixtrackProFX.searching[deck]) {
 		var position = engine.getValue(group, 'playposition');
 
-		if(position <= 0){
+		if(position <= 0)
 			position = 0;
-		}
-		if(position >= 1){
+		if(position >= 1)
 			position = 1;
-		}
 
 		engine.setValue(group, 'playposition', position + newValue * 0.0001);
 		MixtrackProFX.resetScratchTimer(deck, newValue);
@@ -442,11 +438,11 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group){
 		return;
 	}
 
-	if(MixtrackProFX.scratch_direction[deck] === null){
+	if(MixtrackProFX.scratch_direction[deck] === null) {
 		MixtrackProFX.scratch_direction[deck] = direction;
 	}
-	else if(MixtrackProFX.scratch_direction[deck] != direction){
-		if(!MixtrackProFX.touching[deck]){
+	else if(MixtrackProFX.scratch_direction[deck] != direction) {
+		if(!MixtrackProFX.touching[deck]) {
 			MixtrackProFX.scratchDisable(deck);
 		}
 
@@ -461,7 +457,7 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group){
 		engine.scratchTick(deck, newValue);
 		MixtrackProFX.resetScratchTimer(deck, newValue);
 	}
-	else if(MixtrackProFX.shift){
+	else if(MixtrackProFX.shift) {
 		if (MixtrackProFX.scratch_accumulator[deck] > 61) {
 			MixtrackProFX.scratch_accumulator[deck] -= 61;
 			if (direction) { // forward
@@ -477,7 +473,8 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group){
 
 MixtrackProFX.touching = [false, false, false];
 MixtrackProFX.searching = [false, false, false];
-MixtrackProFX.wheelTouch = function(channel, control, value, status, group){
+
+MixtrackProFX.wheelTouch = function(channel, control, value, status, group) {
 	var deck = channel + 1;
 
 	if(!MixtrackProFX.shift
