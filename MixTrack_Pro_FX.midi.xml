@@ -356,6 +356,42 @@
                 </options>
             </control>
             <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.effect[1].tap.input</key>
+                <status>0x98</status>
+                <midino>0x09</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.effect[2].tap.input</key>
+                <status>0x99</status>
+                <midino>0x09</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.effect[1].tap.input</key>
+                <status>0x88</status>
+                <midino>0x09</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.effect[2].tap.input</key>
+                <status>0x89</status>
+                <midino>0x09</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
                 <group>[Channel2]</group>
                 <key>MixtrackProFX.deck[2].hotcueButton[3].input</key>
                 <status>0x95</status>

@@ -108,6 +108,14 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 		inKey: "mix"
 	});
 
+	this.tap = new components.Button({
+		group: "[Channel" + this.unitNumber + "]",
+		key: "bpm_tap",
+		output: function(newState) {
+			midi.sendShortMsg(0x88 | this.unitNumber, 0x09, getLedState(newState));
+		}
+	});
+
 	/*this.forEachComponent(function(component) {
 		if(component.group === undefined) {
 			component.group = eu.group;
