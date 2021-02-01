@@ -299,6 +299,16 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 		key: "reverseroll"
 	});
 
+	this.pitchBendUp = new components.Button({
+		type: components.Button.prototype.types.powerWindow,
+		key: "rate_temp_up",
+	});
+
+	this.pitchBendDown = new components.Button({
+		type: components.Button.prototype.types.powerWindow,
+		key: "rate_temp_down",
+	});
+
 	this.reconnectComponents(function(component) {
 		if(component.group === undefined) {
 			component.group = this.currentDeck;

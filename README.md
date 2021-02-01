@@ -15,6 +15,7 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * PFL/headphone cue
   * Loop toggle (shift: reloop)
   * Loop half/double (shift: loop in/out)
+  * Pitch bend up/down
 * Knobs
   * Master gain
   * Mic gain
@@ -37,7 +38,6 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
 * FX on/off
 
 ### Not working
-* Pitch bend up/down
 * Pitch range
 * Key lock
 * Beats multiplier knob
