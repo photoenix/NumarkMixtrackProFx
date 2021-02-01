@@ -1,7 +1,3 @@
-function getLedState(binaryState) {
-	return binaryState == 1 ? 0x7F : 0x01;
-}
-
 var MixtrackProFX = {};
 
 // initialization
@@ -110,42 +106,27 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 
 	this.tap = new components.Button({
 		group: "[Channel" + this.unitNumber + "]",
-		key: "bpm_tap",
-		output: function(newState) {
-			midi.sendShortMsg(0x88 | this.unitNumber, 0x09, getLedState(newState));
-		}
+		inKey: "bpm_tap"
 	});
 
 	this.effectHpf = new components.Button({
 		group: "[EffectRack1_EffectUnit1_Effect1]",
-		key: "prev_effect",
-		output: function(newState) {
-			midi.sendShortMsg(0x88 | this.unitNumber, 0x00, getLedState(newState));
-		}
+		inKey: "prev_effect",
 	});
 
 	this.effectEcho = new components.Button({
 		group: "[EffectRack1_EffectUnit1_Effect1]",
-		key: "next_effect",
-		output: function(newState) {
-			midi.sendShortMsg(0x89 | this.unitNumber, 0x03, getLedState(newState));
-		}
+		inKey: "next_effect",
 	});
 
 	this.effectFlanger = new components.Button({
 		group: "[EffectRack1_EffectUnit2_Effect1]",
-		key: "prev_effect",
-		output: function(newState) {
-			midi.sendShortMsg(0x88 | this.unitNumber, 0x02, getLedState(newState));
-		}
+		inKey: "prev_effect"
 	});
 
 	this.effectPhaser = new components.Button({
 		group: "[EffectRack1_EffectUnit2_Effect1]",
-		key: "next_effect",
-		output: function(newState) {
-			midi.sendShortMsg(0x89 | this.unitNumber, 0x05, getLedState(newState));
-		}
+		inKey: "next_effect"
 	});
 
 	/*this.forEachComponent(function(component) {
@@ -296,17 +277,11 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	});
 
 	this.loopHalf = new components.Button({
-		key: "loop_halve",
-		output: function(newState) {
-			midi.sendShortMsg(0x94 | channel, 0x34, getLedState(newState));
-		}
+		inKey: "loop_halve"
 	});
 
 	this.loopDouble = new components.Button({
-		key: "loop_double",
-		output: function(newState) {
-			midi.sendShortMsg(0x94 | channel, 0x35, getLedState(newState));
-		}
+		inKey: "loop_double"
 	});
 
 	this.loopIn = new components.Button({
