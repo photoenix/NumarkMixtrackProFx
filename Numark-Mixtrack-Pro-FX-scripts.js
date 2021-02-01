@@ -300,18 +300,21 @@ MixtrackProFX.Browse = function() {
 		group: "[Library]",
 		inKey: "Move",
 		input: function (channel, control, value, status, group) {
-			if (value === 1) {
+			if (value === 1)
 				engine.setParameter(this.group, this.inKey + "Down", 1);
-			} else if (value === 127) {
+			else if (value === 127)
 				engine.setParameter(this.group, this.inKey + "Up", 1);
-			}
-		},
-		unshift: function() {
-			this.inKey = "Move";
-		},
-		shift: function() {
-			this.inKey = "Scroll";
-		},
+		}
+	});
+
+	this.knobShift = new components.Encoder({
+		group: "[Channel1]", // if it's stupid and works, then it's not stupid
+		input: function (channel, control, value, status, group) {
+			if (value === 1)
+				engine.setParameter(this.group, "waveform_zoom_up", 1);
+			else if (value === 127)
+				engine.setParameter(this.group, "waveform_zoom_down", 1);
+		}
 	});
 
 	this.button = new components.Button({

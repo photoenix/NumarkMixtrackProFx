@@ -9,16 +9,13 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * Play/pause
   * Cue
   * Sync
-  * Load track
-  * Switch between tree and track list (library knob press)
-  * Select item (shift + library knob press)
+  * Load track (shift: load track and play)
+  * Library knob press - switch between tree and track list (shift: select item)
   * Scratch toggle + led
   * FX on/off
   * PFL/headphone cue
-  * Loop toggle + led
-  * Reloop (shift)
-  * Loop half/double
-  * Loop in/out (shift)
+  * Loop toggle + led (shift: reloop)
+  * Loop half/double (shift: loop in/out)
 * Knobs
   * Master gain
   * Mic gain
@@ -28,7 +25,7 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * EQ (high/mid/low)
   * Filter
   * FX dry/wet
-  * Browse
+  * Browse/scroll (shift: zoom in/out waveform display)
 * Sliders
   * Channel fader
   * Crossfader
