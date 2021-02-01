@@ -17,6 +17,7 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * Loop half/double (shift: loop in/out)
   * Pitch bend up/down
   * Tap BPM
+  * Key lock
 * Knobs
   * Master gain
   * Mic gain
@@ -41,7 +42,6 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
 
 ### Not working
 * Pitch range
-* Key lock
 * Beats multiplier knob
 * Pad mode switches (cue, auto loop, fader cuts, samples)
 * Jogwheel quick seek

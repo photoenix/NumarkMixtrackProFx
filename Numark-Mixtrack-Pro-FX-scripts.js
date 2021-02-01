@@ -307,6 +307,11 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 		key: "rate_temp_down",
 	});
 
+	this.keylock = new components.Button({
+		type: components.Button.prototype.types.toggle,
+		inKey: "keylock",
+	});
+
 	this.reconnectComponents(function(component) {
 		if(component.group === undefined) {
 			component.group = this.currentDeck;
