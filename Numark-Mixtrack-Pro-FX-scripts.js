@@ -95,21 +95,13 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 
 	this.setCurrentUnit(unitNumber);
 
-	this.EffectEnableButton = function(number) {
-		this.number = number;
-		this.group = "[EffectRack1_EffectUnit" + eu.currentUnitNumber + "_Effect" + this.number + "]";
-		this.midi = [0xB0 + eu.currentUnitNumber, this.number - 1];
-		components.Button.call(this);
-	};
-
-	this.EffectEnableButton.prototype = new components.Button({
+	this.enableButton = new components.Button({
+		group: "[EffectRack1_EffectUnit" + eu.currentUnitNumber + "_Effect1]",
 		input: function(channel, control, value, status, group) {
 			if (value == 2) value = 1;
 			engine.setValue(group, "enabled", value);
 		}
 	});
-
-	this.enableButton = new this.EffectEnableButton(1);
 
 	this.dryWetKnob = new components.Pot({
 		group: this.group,
