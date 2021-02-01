@@ -11,7 +11,7 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * Sync
   * Load track (shift: load track and play)
   * Library knob press - switch between tree and track list (shift: select item)
-  * Scratch toggle
+  * Scratch toggle (shift: bleep)
   * PFL/headphone cue
   * Loop toggle (shift: reloop)
   * Loop half/double (shift: loop in/out)
@@ -44,7 +44,6 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
 * Software FX (HPF/LPF/Flanger/Echo/Reverb/Phaser)
 * Pad mode switches (cue, auto loop, fader cuts, samples)
 * Tap BPM
-* Bleep
 * Jogwheel quick seek
 
 ## Notes

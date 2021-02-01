@@ -1,3 +1,7 @@
+function getLedState(binaryState) {
+	return binaryState == 1 ? 0x7F : 0x01;
+}
+
 var MixtrackProFX = {};
 
 // initialization
@@ -255,8 +259,7 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 				script.triggerControl(group, "beatlooproll_activate");
 		},
 		output: function(newState) {
-			ledValue = newState ? 0x7F : 0x01;
-			midi.sendShortMsg(0x94 | channel, 0x40, ledValue);
+			midi.sendShortMsg(0x94 | channel, 0x40, getLedState(newState));
 		}
 	});
 
@@ -283,6 +286,11 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	this.loopOut = new components.Button({
 		group: this.currentDeck,
 		inKey: "loop_out"
+	});
+
+	this.bleep = new components.Button({
+		group: this.currentDeck,
+		key: "reverseroll"
 	});
 
 	this.reconnectComponents(function(component) {
@@ -341,7 +349,7 @@ MixtrackProFX.HeadGain.prototype = new components.Pot({
 
 MixtrackProFX.wheel = [];
 
-MixtrackProFX.wheelToggle = function(channel, control, value, status, group) {
+MixtrackProFX.scratchToggle = function(channel, control, value, status, group) {
 	if(value != 0x7F) return;
 
 	MixtrackProFX.wheel[channel] = !MixtrackProFX.wheel[channel];
