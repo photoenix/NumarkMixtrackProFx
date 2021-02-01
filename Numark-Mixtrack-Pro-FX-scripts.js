@@ -103,16 +103,17 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 	};
 
 	this.EffectEnableButton.prototype = new components.Button({
-		type: components.Button.prototype.types.powerWindow,
-		outKey: "enabled",
-		inKey: "enabled",
+		input: function(channel, control, value, status, group) {
+			if (value == 2) value = 1;
+			engine.setValue(group, "enabled", value);
+		}
 	});
 
 	this.enableButton = new this.EffectEnableButton(1);
 
 	this.dryWetKnob = new components.Pot({
 		group: this.group,
-		inKey: "mix",
+		inKey: "mix"
 	});
 
 	this.forEachComponent(function(component) {

@@ -32,10 +32,10 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * Pitch fader
 * Master VU meter
 * Jogwheel (pitch/scratch)
+* FX on/off
 
 ### Kinda working
 * Pads (hot cue)
-* FX on/off
 
 ### Not working
 * Pitch range
