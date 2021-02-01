@@ -228,8 +228,7 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	);
 
 	this.pitch = new components.Pot({
-		inKey: "rate",
-		invert: true,
+		inKey: "rate"
 	});
 
 	this.hotcueButton = new components.ComponentContainer();
