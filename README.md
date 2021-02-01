@@ -11,10 +11,9 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * Sync
   * Load track (shift: load track and play)
   * Library knob press - switch between tree and track list (shift: select item)
-  * Scratch toggle + led
-  * FX on/off
+  * Scratch toggle
   * PFL/headphone cue
-  * Loop toggle + led (shift: reloop)
+  * Loop toggle (shift: reloop)
   * Loop half/double (shift: loop in/out)
 * Knobs
   * Master gain
@@ -31,16 +30,19 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * Crossfader
   * Pitch fader
 * Master VU meter
-* Jog wheel (pitch/scratch)
+* Jogwheel (pitch/scratch)
 
 ### Kinda working
 * Pads (hot cue)
+* FX on/off
 
 ### Not working
 * Pitch bend up/down
+* Pitch range
+* Key lock
 * Beats multiplier knob
 * Software FX (HPF/LPF/Flanger/Echo/Reverb/Phaser)
-* Pad mode switches (cue/auto loop/fader cuts/samples)
+* Pad mode switches (cue, auto loop, fader cuts, samples)
 * Tap BPM
 * Bleep
 * Jogwheel quick seek
