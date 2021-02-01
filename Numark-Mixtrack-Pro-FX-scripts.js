@@ -250,7 +250,6 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	});
 
 	this.loop = new components.Button({
-		group: this.currentDeck,
 		outKey: "loop_enabled",
 		input: function(channel, control, value, status, group) {
 			if (engine.getValue(group, "loop_enabled") == 0)
@@ -264,12 +263,10 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	});
 
 	this.reloop = new components.Button({
-		group: this.currentDeck,
 		inKey: "loop_in_goto"
 	});
 
 	this.loopHalf = new components.Button({
-		group: this.currentDeck,
 		key: "loop_halve",
 		output: function(newState) {
 			midi.sendShortMsg(0x94 | channel, 0x34, getLedState(newState));
@@ -277,7 +274,6 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	});
 
 	this.loopDouble = new components.Button({
-		group: this.currentDeck,
 		key: "loop_double",
 		output: function(newState) {
 			midi.sendShortMsg(0x94 | channel, 0x35, getLedState(newState));
@@ -285,17 +281,15 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	});
 
 	this.loopIn = new components.Button({
-		group: this.currentDeck,
 		inKey: "loop_in"
 	});
 
 	this.loopOut = new components.Button({
-		group: this.currentDeck,
 		inKey: "loop_out"
 	});
 
 	this.bleep = new components.Button({
-		group: this.currentDeck,
+		type: components.Button.prototype.types.powerWindow,
 		key: "reverseroll"
 	});
 
