@@ -74,7 +74,7 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 	var eu = this;
 	this.unitNumber = unitNumber;
 
-	this.setCurrentUnit = function(newNumber) {
+	/*this.setCurrentUnit = function(newNumber) {
 		this.currentUnitNumber = newNumber;
 		this.group = "[EffectRack1_EffectUnit" + newNumber + "]";
 
@@ -93,7 +93,7 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 		});
 	};
 
-	this.setCurrentUnit(unitNumber);
+	this.setCurrentUnit(unitNumber);*/
 
 	this.enableButton = new components.Button({
 		group: "[EffectRack1_EffectUnit" + eu.currentUnitNumber + "_Effect1]",
