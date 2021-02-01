@@ -37,12 +37,12 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
 
 ### Kinda working
 * Pads (hot cue)
+* FX select (HPF/LPF/Flanger/Echo/Reverb/Phaser)
 
 ### Not working
 * Pitch range
 * Key lock
 * Beats multiplier knob
-* FX select buttons (HPF/LPF/Flanger/Echo/Reverb/Phaser)
 * Pad mode switches (cue, auto loop, fader cuts, samples)
 * Jogwheel quick seek
 * Reset BPM (shift + tap)

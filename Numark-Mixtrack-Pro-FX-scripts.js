@@ -49,10 +49,10 @@ MixtrackProFX.init = function(id, debug) {
 
 	// effect leds
 	midi.sendShortMsg(0x88, 0x00, 0x01); // hpf
-	midi.sendShortMsg(0x88, 0x01, 0x01); // lpf
+	// midi.sendShortMsg(0x88, 0x01, 0x01); // lpf :(
 	midi.sendShortMsg(0x88, 0x02, 0x01); // flanger
 	midi.sendShortMsg(0x89, 0x03, 0x01); // echo
-	midi.sendShortMsg(0x89, 0x04, 0x01); // reverb
+	// midi.sendShortMsg(0x89, 0x04, 0x01); // reverb :(
 	midi.sendShortMsg(0x89, 0x05, 0x01); // phaser
 
 	// vumeters leds (off)
@@ -113,6 +113,38 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 		key: "bpm_tap",
 		output: function(newState) {
 			midi.sendShortMsg(0x88 | this.unitNumber, 0x09, getLedState(newState));
+		}
+	});
+
+	this.effectHpf = new components.Button({
+		group: "[EffectRack1_EffectUnit1_Effect1]",
+		key: "prev_effect",
+		output: function(newState) {
+			midi.sendShortMsg(0x88 | this.unitNumber, 0x00, getLedState(newState));
+		}
+	});
+
+	this.effectEcho = new components.Button({
+		group: "[EffectRack1_EffectUnit1_Effect1]",
+		key: "next_effect",
+		output: function(newState) {
+			midi.sendShortMsg(0x89 | this.unitNumber, 0x03, getLedState(newState));
+		}
+	});
+
+	this.effectFlanger = new components.Button({
+		group: "[EffectRack1_EffectUnit2_Effect1]",
+		key: "prev_effect",
+		output: function(newState) {
+			midi.sendShortMsg(0x88 | this.unitNumber, 0x02, getLedState(newState));
+		}
+	});
+
+	this.effectPhaser = new components.Button({
+		group: "[EffectRack1_EffectUnit2_Effect1]",
+		key: "next_effect",
+		output: function(newState) {
+			midi.sendShortMsg(0x89 | this.unitNumber, 0x05, getLedState(newState));
 		}
 	});
 
