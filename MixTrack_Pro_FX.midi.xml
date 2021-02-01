@@ -770,6 +770,27 @@
                 </options>
             </control>
         </controls>
-        <outputs/>
+        <outputs>
+            <output>
+                <group>[Channel1]</group>
+                <key>loop_enabled</key>
+                <status>0x94</status>
+                <midino>0x40</midino>
+                <on>0x7F</on>
+                <off>0x01</off>
+                <maximum>1</maximum>
+                <minimum>0.5</minimum>
+            </output>
+            <output>
+                <group>[Channel2]</group>
+                <key>loop_enabled</key>
+                <status>0x95</status>
+                <midino>0x40</midino>
+                <on>0x7F</on>
+                <off>0x01</off>
+                <maximum>1</maximum>
+                <minimum>0.5</minimum>
+            </output>
+        </outputs>
     </controller>
 </MixxxControllerPreset>
