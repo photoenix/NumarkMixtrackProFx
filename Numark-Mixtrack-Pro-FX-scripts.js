@@ -270,12 +270,18 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 	this.loopHalf = new components.Button({
 		group: this.currentDeck,
-		inKey: "loop_halve"
+		key: "loop_halve",
+		output: function(newState) {
+			midi.sendShortMsg(0x94 | channel, 0x34, getLedState(newState));
+		}
 	});
 
 	this.loopDouble = new components.Button({
 		group: this.currentDeck,
-		inKey: "loop_double"
+		key: "loop_double",
+		output: function(newState) {
+			midi.sendShortMsg(0x94 | channel, 0x35, getLedState(newState));
+		}
 	});
 
 	this.loopIn = new components.Button({

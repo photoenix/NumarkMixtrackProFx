@@ -293,9 +293,27 @@
                 </options>
             </control>
             <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[2].loopDouble.input</key>
+                <status>0x85</status>
+                <midino>0x35</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
                 <group>[Channel1]</group>
                 <key>MixtrackProFX.deck[1].loopDouble.input</key>
                 <status>0x94</status>
+                <midino>0x35</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[1].loopDouble.input</key>
+                <status>0x84</status>
                 <midino>0x35</midino>
                 <options>
                     <script-binding/>
@@ -429,6 +447,15 @@
             </control>
             <control>
                 <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[2].loopHalf.input</key>
+                <status>0x85</status>
+                <midino>0x34</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
                 <key>MixtrackProFX.deck[2].loopIn.input</key>
                 <status>0x95</status>
                 <midino>0x36</midino>
@@ -449,6 +476,15 @@
                 <group>[Channel1]</group>
                 <key>MixtrackProFX.deck[1].loopHalf.input</key>
                 <status>0x94</status>
+                <midino>0x34</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[1].loopHalf.input</key>
+                <status>0x84</status>
                 <midino>0x34</midino>
                 <options>
                     <script-binding/>
