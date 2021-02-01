@@ -159,10 +159,10 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	this.loadButton = new components.Button({
 		inKey: "LoadSelectedTrack",
 		shift: function() {
-			this.inKey = "LoadSelectedTrackAndPlay";
+			this.group = "[PreviewDeck" + (channel + 1) + "]";
 		},
 		unshift: function() {
-			this.inKey = "LoadSelectedTrack";
+			this.group = "[Channel" + (channel + 1) + "]";
 		},
 	});
 
