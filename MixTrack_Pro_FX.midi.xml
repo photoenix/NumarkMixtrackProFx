@@ -2,8 +2,8 @@
 <MixxxControllerPreset schemaVersion="1" mixxxVersion="2.1.0+">
     <info>
         <name>Numark Mixtrack Pro FX</name>
-        <author>bad1dea5, sancho</author>
-        <description>Mapping for the Numark Mixtrack Pro FX</description>
+        <author>bad1dea5, modified by sancho</author>
+        <description>Basic mapping for the Numark Mixtrack Pro FX</description>
         <forums>https://mixxx.discourse.group/t/numark-mixtrack-pro-fx/19561</forums>
     </info>
     <controller id="MixTrack">

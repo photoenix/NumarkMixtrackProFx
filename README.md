@@ -12,10 +12,10 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * Load track
   * Switch between tree and track list (library knob press)
   * Select item (shift + library knob press)
-  * Scratch toggle
+  * Scratch toggle + led
   * FX on/off
   * PFL/headphone cue
-  * Loop toggle
+  * Loop toggle + led
   * Reloop (shift)
   * Loop half/double
   * Loop in/out (shift)
