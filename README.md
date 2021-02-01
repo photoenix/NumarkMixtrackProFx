@@ -9,7 +9,7 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
   * Play/pause
   * Cue
   * Sync
-  * Load track (shift: load track and play)
+  * Load track (shift: load to preview deck)
   * Library knob press - switch between tree and track list (shift: select item)
   * Scratch toggle (shift: bleep)
   * PFL/headphone cue
@@ -41,7 +41,7 @@ An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/pr
 * Pitch range
 * Key lock
 * Beats multiplier knob
-* Software FX (HPF/LPF/Flanger/Echo/Reverb/Phaser)
+* FX select buttons (HPF/LPF/Flanger/Echo/Reverb/Phaser)
 * Pad mode switches (cue, auto loop, fader cuts, samples)
 * Tap BPM
 * Jogwheel quick seek
