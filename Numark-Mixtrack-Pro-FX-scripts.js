@@ -72,7 +72,7 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 
 	this.setCurrentUnit = function(newNumber) {
 		this.currentUnitNumber = newNumber;
-		this.group = '[EffectRack1_EffectUnit' + newNumber + ']';
+		this.group = "[EffectRack1_EffectUnit" + newNumber + "]";
 
 		this.reconnectComponents(function(component) {
 			var unitMatch = component.group.match(script.effectUnitRegEx);
@@ -81,9 +81,9 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 			} else {
 				var effectMatch = component.group.match(script.individualEffectRegEx);
 				if (effectMatch !== null) {
-					component.group = '[EffectRack1_EffectUnit' +
+					component.group = "[EffectRack1_EffectUnit" +
 					eu.currentUnitNumber +
-					'_Effect' + effectMatch[2] + ']';
+					"_Effect" + effectMatch[2] + "]";
 				}
 			}
 		});
@@ -93,22 +93,22 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 
 	this.EffectEnableButton = function(number) {
 		this.number = number;
-		this.group = '[EffectRack1_EffectUnit' + eu.currentUnitNumber + '_Effect' + this.number + ']';
+		this.group = "[EffectRack1_EffectUnit" + eu.currentUnitNumber + "_Effect" + this.number + "]";
 		this.midi = [0xB0 + eu.currentUnitNumber, this.number - 1];
 		components.Button.call(this);
 	};
 
 	this.EffectEnableButton.prototype = new components.Button({
 		type: components.Button.prototype.types.powerWindow,
-		outKey: 'enabled',
-		inKey: 'enabled',
+		outKey: "enabled",
+		inKey: "enabled",
 	});
 
 	this.enableButton = new this.EffectEnableButton(1);
 
 	this.dryWetKnob = new components.Pot({
 		group: this.group,
-		inKey: 'mix',
+		inKey: "mix",
 	});
 
 	this.forEachComponent(function(component) {
@@ -134,7 +134,7 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 			this.type = components.Button.prototype.types.toggle;
 		},
 		shift: function() {
-			this.inKey = 'play_stutter';
+			this.inKey = "play_stutter";
 			this.type = components.Button.prototype.types.push;
 		},
 	});
@@ -153,23 +153,23 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 		type: components.Button.prototype.types.toggle,
 		midi: [0x90 + channel, 0x1B],
 		off: 0x01,
-		key: 'pfl',
+		key: "pfl",
 	});
 
 	this.loadButton = new components.Button({
-		inKey: 'LoadSelectedTrack',
+		inKey: "LoadSelectedTrack",
 		shift: function() {
-			this.inKey = 'LoadSelectedTrackAndPlay';
+			this.inKey = "LoadSelectedTrackAndPlay";
 		},
 		unshift: function() {
-			this.inKey = 'LoadSelectedTrack';
+			this.inKey = "LoadSelectedTrack";
 		},
 	});
 
 	this.volume = new components.Pot({
 		midi: [0xB0 + channel, 0x1C],
 		group: this.currentDeck,
-		inKey: 'volume',
+		inKey: "volume",
 	});
 
 	this.EqEffectKnob = function(group, inKey, fxKey, filter) {
@@ -178,7 +178,7 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 		this.fxKey = fxKey;
 
 		if(filter) {
-			this.shiftKey = 'super1';
+			this.shiftKey = "super1";
 		}
 
 		this.ignoreNext = null;
@@ -192,25 +192,25 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	this.EqEffectKnob.prototype = new components.Pot({
 	});
 
-	this.treble = new this.EqEffectKnob('[EqualizerRack1_' + this.currentDeck + '_Effect1]', 'parameter3', 'parameter3');
-	this.mid = new this.EqEffectKnob('[EqualizerRack1_' + this.currentDeck + '_Effect1]', 'parameter2', 'parameter4');
-	this.bass = new this.EqEffectKnob('[EqualizerRack1_' + this.currentDeck + '_Effect1]', 'parameter1', 'parameter5');
+	this.treble = new this.EqEffectKnob("[EqualizerRack1_" + this.currentDeck + "_Effect1]", "parameter3", "parameter3");
+	this.mid = new this.EqEffectKnob("[EqualizerRack1_" + this.currentDeck + "_Effect1]", "parameter2", "parameter4");
+	this.bass = new this.EqEffectKnob("[EqualizerRack1_" + this.currentDeck + "_Effect1]", "parameter1", "parameter5");
 
 	this.filter = new this.EqEffectKnob(
-		'[QuickEffectRack1_' + this.currentDeck + ']',
-		'super1',
-		'parameter1',
+		"[QuickEffectRack1_" + this.currentDeck + "]",
+		"super1",
+		"parameter1",
 		true
 	);
 
 	this.gain = new this.EqEffectKnob(
 		this.currentDeck,
-		'pregain',
-		'parameter2'
+		"pregain",
+		"parameter2"
 	);
 
 	this.pitch = new components.Pot({
-		inKey: 'rate',
+		inKey: "rate",
 		invert: true,
 	});
 
@@ -297,31 +297,31 @@ MixtrackProFX.Deck.prototype = new components.Deck();
 // browse
 MixtrackProFX.Browse = function() {
 	this.knob = new components.Encoder({
-		group: '[Library]',
-		inKey: 'Move',
+		group: "[Library]",
+		inKey: "Move",
 		input: function (channel, control, value, status, group) {
 			if (value === 1) {
-				engine.setParameter(this.group, this.inKey + 'Down', 1);
+				engine.setParameter(this.group, this.inKey + "Down", 1);
 			} else if (value === 127) {
-				engine.setParameter(this.group, this.inKey + 'Up', 1);
+				engine.setParameter(this.group, this.inKey + "Up", 1);
 			}
 		},
 		unshift: function() {
-			this.inKey = 'Move';
+			this.inKey = "Move";
 		},
 		shift: function() {
-			this.inKey = 'Scroll';
+			this.inKey = "Scroll";
 		},
 	});
 
 	this.button = new components.Button({
-		group: '[Library]',
-		inKey: 'MoveFocusForward'
+		group: "[Library]",
+		inKey: "MoveFocusForward"
 	});
 
 	this.buttonShift = new components.Button({
-		group: '[Library]',
-		inKey: 'GoToItem'
+		group: "[Library]",
+		inKey: "GoToItem"
 	});
 };
 
@@ -332,8 +332,8 @@ MixtrackProFX.HeadGain = function() {
 };
 
 MixtrackProFX.HeadGain.prototype = new components.Pot({
-	group: '[Master]',
-	inKey: 'headGain',
+	group: "[Master]",
+	inKey: "headGain",
 });
 
 MixtrackProFX.wheel = [];
@@ -430,14 +430,14 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group) {
 		newValue = value - 128;
 
 	if(MixtrackProFX.searching[deck]) {
-		var position = engine.getValue(group, 'playposition');
+		var position = engine.getValue(group, "playposition");
 
 		if(position <= 0)
 			position = 0;
 		if(position >= 1)
 			position = 1;
 
-		engine.setValue(group, 'playposition', position + newValue * 0.0001);
+		engine.setValue(group, "playposition", position + newValue * 0.0001);
 		MixtrackProFX.resetScratchTimer(deck, newValue);
 
 		return;
@@ -466,13 +466,13 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group) {
 		if (MixtrackProFX.scratch_accumulator[deck] > 61) {
 			MixtrackProFX.scratch_accumulator[deck] -= 61;
 			if (direction) { // forward
-				engine.setParameter(group, 'beatjump_1_forward', 1);
+				engine.setParameter(group, "beatjump_1_forward", 1);
 			} else {
-				engine.setParameter(group, 'beatjump_1_backward', 1);
+				engine.setParameter(group, "beatjump_1_backward", 1);
 			}
 		}
 	} else {
-		engine.setValue(group, 'jog', newValue * 0.1);
+		engine.setValue(group, "jog", newValue * 0.1);
 	}
 };
 
@@ -514,20 +514,20 @@ MixtrackProFX.wheelTouch = function(channel, control, value, status, group) {
 MixtrackProFX.vuCallback = function(value, group, control) {
 	var level = value * 90;
 
-	if(engine.getValue('[Channel1]', 'pfl')
-		|| engine.getValue('[Channel2]', 'pfl'))
+	if(engine.getValue("[Channel1]", "pfl")
+		|| engine.getValue("[Channel2]", "pfl"))
 	{
-		if (group == '[Channel1]') {
+		if (group == "[Channel1]") {
 			midi.sendShortMsg(0xB0, 0x1F, level);
 		}
-		else if (group == '[Channel2]') {
+		else if (group == "[Channel2]") {
 			midi.sendShortMsg(0xB1, 0x1F, level);
 		}
 	}
-	else if (group == '[Channel1]') {
+	else if (group == "[Channel1]") {
 		midi.sendShortMsg(0xB0, 0x1F, level);
 	}
-	else if (group == '[Channel2]') {
+	else if (group == "[Channel2]") {
 		midi.sendShortMsg(0xB1, 0x1F, level);
 	}
 };
