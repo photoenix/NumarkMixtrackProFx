@@ -265,6 +265,9 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	});
 
 	this.loop = new components.Button({
+		key: "loop_enabled",
+		midi: [0x94 + channel, 0x40],
+		off: 0x01,
 		input: function(channel, control, value, status, group) {
 			if (engine.getValue(group, "loop_enabled") == 0)
 				script.triggerControl(group, "beatloop_activate");

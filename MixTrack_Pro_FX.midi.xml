@@ -916,33 +916,11 @@
         </controls>
         <outputs>
             <output>
-                <group>[Channel1]</group>
-                <key>loop_enabled</key>
-                <status>0x94</status>
-                <midino>0x40</midino>
-                <on>0x7F</on>
-                <off>0x01</off>
-                <maximum>1</maximum>
-                <minimum>0.5</minimum>
-            </output>
-            <output>
-                <group>[Channel2]</group>
-                <key>loop_enabled</key>
-                <status>0x95</status>
-                <midino>0x40</midino>
-                <on>0x7F</on>
-                <off>0x01</off>
-                <maximum>1</maximum>
-                <minimum>0.5</minimum>
-            </output>
-            <output>
                 <group>[EffectRack1_EffectUnit1_Effect1]</group>
                 <key>prev_effect</key>
                 <status>0x98</status>
                 <midino>0x00</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
             <output>
@@ -950,9 +928,7 @@
                 <key>prev_effect</key>
                 <status>0x98</status>
                 <midino>0x02</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
             <output>
@@ -960,9 +936,7 @@
                 <key>next_effect</key>
                 <status>0x99</status>
                 <midino>0x03</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
             <output>
@@ -970,9 +944,7 @@
                 <key>next_effect</key>
                 <status>0x99</status>
                 <midino>0x05</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
             <output>
@@ -980,9 +952,7 @@
                 <key>bpm_tap</key>
                 <status>0x88</status>
                 <midino>0x09</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
             <output>
@@ -990,9 +960,7 @@
                 <key>bpm_tap</key>
                 <status>0x89</status>
                 <midino>0x09</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
             <output>
@@ -1000,9 +968,7 @@
                 <key>loop_halve</key>
                 <status>0x94</status>
                 <midino>0x34</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
             <output>
@@ -1010,9 +976,7 @@
                 <key>loop_halve</key>
                 <status>0x95</status>
                 <midino>0x34</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
             <output>
@@ -1020,9 +984,7 @@
                 <key>loop_double</key>
                 <status>0x94</status>
                 <midino>0x35</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
             <output>
@@ -1030,9 +992,7 @@
                 <key>loop_double</key>
                 <status>0x95</status>
                 <midino>0x35</midino>
-                <on>0x7F</on>
                 <off>0x01</off>
-                <maximum>1</maximum>
                 <minimum>0.5</minimum>
             </output>
         </outputs>
