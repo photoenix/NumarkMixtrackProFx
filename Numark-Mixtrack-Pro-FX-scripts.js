@@ -1,5 +1,7 @@
 var MixtrackProFX = {};
 
+MixtrackProFX.pitchRanges = [0.08, 0.16, 1];
+
 // initialization
 MixtrackProFX.init = function(id, debug) {
 	MixtrackProFX.effect = new components.ComponentContainer();
@@ -309,6 +311,14 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	this.keylock = new components.Button({
 		type: components.Button.prototype.types.toggle,
 		inKey: "keylock",
+	});
+
+	this.pitchRange = new components.Button({
+		currentRangeIdx: 0,
+		input: function(channel, control, value, status, group) {
+			this.currentRangeIdx = (this.currentRangeIdx + 1) % MixtrackProFX.pitchRanges.length;
+			engine.setValue(group, "rateRange", MixtrackProFX.pitchRanges[this.currentRangeIdx]);
+		}
 	});
 
 	this.reconnectComponents(function(component) {
