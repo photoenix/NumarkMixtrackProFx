@@ -21,9 +21,8 @@ MixtrackProFX.init = function(id, debug) {
 	var statusSysex = [0xF0, 0x00, 0x20, 0x7F, 0x03, 0x01, 0xF7];
 	midi.sendSysexMsg(statusSysex, statusSysex.length);
 
-	// initialize channels
+	// initialize channel leds
 	for(var i = 0; i < 2; i++) {
-		// LEDS
 		midi.sendShortMsg(0x90 | i, 0x00, 0x01); // play
 		midi.sendShortMsg(0x90 | i, 0x01, 0x01); // cue
 		midi.sendShortMsg(0x90 | i, 0x02, 0x01); // sync
@@ -38,9 +37,6 @@ MixtrackProFX.init = function(id, debug) {
 		midi.sendShortMsg(0x94 | i, 0x34, 0x01); // half
 		midi.sendShortMsg(0x94 | i, 0x35, 0x01); // double
 		midi.sendShortMsg(0x94 | i, 0x40, 0x01); // loop
-
-		// wheel
-		MixtrackProFX.wheel[i] = true;
 	}
 
 	midi.sendShortMsg(0x88, 0x09, 0x01); // tap led
@@ -378,19 +374,11 @@ MixtrackProFX.HeadGain.prototype = new components.Pot({
 	inKey: "headGain",
 });
 
-MixtrackProFX.wheel = [];
+MixtrackProFX.scratchEnabled = [true, true];
 
 MixtrackProFX.scratchToggle = function(channel, control, value, status, group) {
-	if(value != 0x7F) return;
-
-	MixtrackProFX.wheel[channel] = !MixtrackProFX.wheel[channel];
-
-	var onOff = 0x01;
-
-	if(MixtrackProFX.wheel[channel])
-		onOff = 0x7F;
-
-	midi.sendShortMsg(0x90 | channel, 0x07, onOff);
+	MixtrackProFX.scratchEnabled[channel] = !MixtrackProFX.scratchEnabled[channel];
+	midi.sendShortMsg(0x90 | channel, 0x07, MixtrackProFX.scratchEnabled[channel] ? 0x7F : 0x01);
 };
 
 MixtrackProFX.scratch_timer = [];
@@ -526,7 +514,7 @@ MixtrackProFX.wheelTouch = function(channel, control, value, status, group) {
 
 	if(!MixtrackProFX.shift
 		&& !MixtrackProFX.searching[deck]
-		&& !MixtrackProFX.wheel[channel]
+		&& !MixtrackProFX.scratchEnabled[channel]
 		&& value != 0)
 	{
 		return;
