@@ -127,11 +127,22 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 		inKey: "next_effect"
 	});
 
-	/*this.forEachComponent(function(component) {
-		if(component.group === undefined) {
-			component.group = eu.group;
-		}
-	});*/
+	this.effectParam = new components.Encoder({
+		group: "[EffectRack1_EffectUnit" + unitNumber + "_Effect1]",
+		inKey: "parameter1",
+		shift: function() {
+			this.inKey = "parameter2";
+		},
+		unshift: function() {
+			this.inKey = "parameter1";
+		},
+		input: function (channel, control, value, status, group) {
+			if (value == 0x01)
+				this.inSetParameter(this.inGetParameter() + 0.05);
+			else if (value == 0x7F)
+				this.inSetParameter(this.inGetParameter() - 0.05);
+		},
+	});
 };
 
 MixtrackProFX.EffectUnit.prototype = new components.ComponentContainer();
