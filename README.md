@@ -8,7 +8,7 @@ Image: [Numark](https://www.numark.com/product/mixtrack-pro-fx)
   * Play/pause
   * Cue
   * Sync
-  * Load track (shift: load to preview deck)
+  * Load track
   * Library knob press - switch between tree and track list
   * Scratch toggle
   * Bleep
@@ -58,6 +58,7 @@ Image: [Numark](https://www.numark.com/product/mixtrack-pro-fx)
 * Shift + browse knob scroll = zoom in/out wave display
 * Shift + browse knob press = select item (collapse/extend tree or load track)
 * Shift + FX param knob = FX param2
+* Shift + load = load track to preview deck
 
 ## Notes
 Please note that the Pro FX is my first controller and I'm very new to DJing, so I may not know how some advanced controller features are supposed to work like. I'm just trying to replicate the controller's behaviour inside VirtualDJ. Also, I don't know if it's just me, but I find the Mixxx scripting API extremely confusing, so there might be some stupid mistakes in code.
