@@ -411,7 +411,7 @@
             </control>
             <control>
                 <group>[EffectRack1_EffectUnit1_Effect1]</group>
-                <key>MixtrackProFX.effect[1].effectHpf.input</key>
+                <key>MixtrackProFX.deck[1].prevEffect.input</key>
                 <status>0x98</status>
                 <midino>0x00</midino>
                 <options>
@@ -419,17 +419,8 @@
                 </options>
             </control>
             <control>
-                <group>[EffectRack1_EffectUnit2_Effect1]</group>
-                <key>MixtrackProFX.effect[1].effectFlanger.input</key>
-                <status>0x98</status>
-                <midino>0x02</midino>
-                <options>
-                    <script-binding/>
-                </options>
-            </control>
-            <control>
                 <group>[EffectRack1_EffectUnit1_Effect1]</group>
-                <key>MixtrackProFX.effect[1].effectEcho.input</key>
+                <key>MixtrackProFX.deck[1].nextEffect.input</key>
                 <status>0x99</status>
                 <midino>0x03</midino>
                 <options>
@@ -438,7 +429,16 @@
             </control>
             <control>
                 <group>[EffectRack1_EffectUnit2_Effect1]</group>
-                <key>MixtrackProFX.effect[1].effectPhaser.input</key>
+                <key>MixtrackProFX.deck[2].prevEffect.input</key>
+                <status>0x98</status>
+                <midino>0x02</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[EffectRack1_EffectUnit2_Effect1]</group>
+                <key>MixtrackProFX.deck[2].nextEffect.input</key>
                 <status>0x99</status>
                 <midino>0x05</midino>
                 <options>
@@ -447,7 +447,7 @@
             </control>
             <control>
                 <group>[EffectRack1_EffectUnit1_Effect1]</group>
-                <key>MixtrackProFX.effect[1].effectHpf.input</key>
+                <key>MixtrackProFX.deck[1].prevEffect.input</key>
                 <status>0x88</status>
                 <midino>0x00</midino>
                 <options>
@@ -455,17 +455,8 @@
                 </options>
             </control>
             <control>
-                <group>[EffectRack1_EffectUnit2_Effect1]</group>
-                <key>MixtrackProFX.effect[1].effectFlanger.input</key>
-                <status>0x88</status>
-                <midino>0x02</midino>
-                <options>
-                    <script-binding/>
-                </options>
-            </control>
-            <control>
                 <group>[EffectRack1_EffectUnit1_Effect1]</group>
-                <key>MixtrackProFX.effect[1].effectEcho.input</key>
+                <key>MixtrackProFX.deck[1].nextEffect.input</key>
                 <status>0x89</status>
                 <midino>0x03</midino>
                 <options>
@@ -474,9 +465,72 @@
             </control>
             <control>
                 <group>[EffectRack1_EffectUnit2_Effect1]</group>
-                <key>MixtrackProFX.effect[1].effectPhaser.input</key>
+                <key>MixtrackProFX.deck[2].prevEffect.input</key>
+                <status>0x88</status>
+                <midino>0x02</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[EffectRack1_EffectUnit2_Effect1]</group>
+                <key>MixtrackProFX.deck[2].nextEffect.input</key>
                 <status>0x89</status>
                 <midino>0x05</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[1].beatsnap.input</key>
+                <status>0x99</status>
+                <midino>0x04</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[2].beatsnap.input</key>
+                <status>0x99</status>
+                <midino>0x04</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[1].setBeatgrid.input</key>
+                <status>0x98</status>
+                <midino>0x01</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[2].setBeatgrid.input</key>
+                <status>0x98</status>
+                <midino>0x01</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[1].setBeatgrid.input</key>
+                <status>0x88</status>
+                <midino>0x01</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[2].setBeatgrid.input</key>
+                <status>0x88</status>
+                <midino>0x01</midino>
                 <options>
                     <script-binding/>
                 </options>
@@ -962,6 +1016,38 @@
                 <key>next_effect</key>
                 <status>0x99</status>
                 <midino>0x05</midino>
+                <off>0x01</off>
+                <minimum>0.5</minimum>
+            </output>
+            <output>
+                <group>[Channel1]</group>
+                <key>quantize</key>
+                <status>0x89</status>
+                <midino>0x04</midino>
+                <off>0x01</off>
+                <minimum>0.5</minimum>
+            </output>
+            <output>
+                <group>[Channel2]</group>
+                <key>quantize</key>
+                <status>0x89</status>
+                <midino>0x04</midino>
+                <off>0x01</off>
+                <minimum>0.5</minimum>
+            </output>
+            <output>
+                <group>[Channel1]</group>
+                <key>beats_translate_curpos</key>
+                <status>0x88</status>
+                <midino>0x01</midino>
+                <off>0x01</off>
+                <minimum>0.5</minimum>
+            </output>
+            <output>
+                <group>[Channel2]</group>
+                <key>beats_translate_curpos</key>
+                <status>0x88</status>
+                <midino>0x01</midino>
                 <off>0x01</off>
                 <minimum>0.5</minimum>
             </output>

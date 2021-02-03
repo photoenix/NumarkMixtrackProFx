@@ -48,6 +48,12 @@ Image: [Numark](https://www.numark.com/product/mixtrack-pro-fx)
 * Jogwheel quick seek
 * Reset BPM (shift + tap)
 
+## FX select buttons
+6 FX buttons act differently than in Serato/VDJ/etc. I don't know how to set a specific effect in Mixxx API, but you can scroll through effect list on both decks. Seems good enough. That leaves two buttons in the middle - they have some bonus functions.
+| ~HPF~ deck 1 FX down | ~LPF~ adjust beatgrid    | ~Flanger~ deck 2 FX down |
+|----------------------|--------------------------|--------------------------|
+| ~Echo~ deck 1 FX up  | ~Reverb~ quantize toggle | ~Phaser~ deck 2 FX up    |
+
 ## Bonus functions
 * Shift + browse knob scroll = zoom in/out wave display
 * Shift + browse knob press = select item (collapse/extend tree or load track)

@@ -43,10 +43,10 @@ MixtrackProFX.init = function(id, debug) {
 
 	// effect leds
 	midi.sendShortMsg(0x88, 0x00, 0x01); // hpf
-	// midi.sendShortMsg(0x88, 0x01, 0x01); // lpf :(
+	midi.sendShortMsg(0x88, 0x01, 0x01); // lpf
 	midi.sendShortMsg(0x88, 0x02, 0x01); // flanger
 	midi.sendShortMsg(0x89, 0x03, 0x01); // echo
-	// midi.sendShortMsg(0x89, 0x04, 0x01); // reverb :(
+	midi.sendShortMsg(0x89, 0x04, 0x01); // reverb
 	midi.sendShortMsg(0x89, 0x05, 0x01); // phaser
 
 	// vumeters leds (off)
@@ -105,26 +105,6 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 	this.tap = new components.Button({
 		group: "[Channel" + this.unitNumber + "]",
 		inKey: "bpm_tap"
-	});
-
-	this.effectHpf = new components.Button({
-		group: "[EffectRack1_EffectUnit1_Effect1]",
-		inKey: "prev_effect",
-	});
-
-	this.effectEcho = new components.Button({
-		group: "[EffectRack1_EffectUnit1_Effect1]",
-		inKey: "next_effect",
-	});
-
-	this.effectFlanger = new components.Button({
-		group: "[EffectRack1_EffectUnit2_Effect1]",
-		inKey: "prev_effect"
-	});
-
-	this.effectPhaser = new components.Button({
-		group: "[EffectRack1_EffectUnit2_Effect1]",
-		inKey: "next_effect"
 	});
 
 	this.effectParam = new components.Encoder({
@@ -329,6 +309,25 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 			this.currentRangeIdx = (this.currentRangeIdx + 1) % MixtrackProFX.pitchRanges.length;
 			engine.setValue(group, "rateRange", MixtrackProFX.pitchRanges[this.currentRangeIdx]);
 		}
+	});
+
+	this.prevEffect = new components.Button({
+		group: "[EffectRack1_EffectUnit" + number + "_Effect1]",
+		inKey: "prev_effect"
+	});
+
+	this.nextEffect = new components.Button({
+		group: "[EffectRack1_EffectUnit" + number + "_Effect1]",
+		inKey: "next_effect"
+	});
+
+	this.beatsnap = new components.Button({
+		type: components.Button.prototype.types.toggle,
+		inKey: "quantize"
+	});
+
+	this.setBeatgrid = new components.Button({
+		inKey: "beats_translate_curpos"
 	});
 
 	this.reconnectComponents(function(component) {
