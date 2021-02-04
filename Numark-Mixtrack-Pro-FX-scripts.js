@@ -181,42 +181,29 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 		inKey: "volume",
 	});
 
-	this.EqEffectKnob = function(group, inKey, fxKey, filter) {
-		this.unshiftGroup = group;
-		this.unshiftKey = inKey;
-		this.fxKey = fxKey;
-
-		if(filter) {
-			this.shiftKey = "super1";
-		}
-
-		this.ignoreNext = null;
-
-		components.Pot.call(this, {
-			group: group,
-			inKey: inKey
-		});
-	};
-
-	this.EqEffectKnob.prototype = new components.Pot({
+	this.treble = new components.Pot({
+		group: "[EqualizerRack1_" + this.currentDeck + "_Effect1]",
+		inKey: "parameter3"
+	});
+	
+	this.mid = new components.Pot({
+		group: "[EqualizerRack1_" + this.currentDeck + "_Effect1]",
+		inKey: "parameter2"
+	});
+	
+	this.bass = new components.Pot({
+		group: "[EqualizerRack1_" + this.currentDeck + "_Effect1]",
+		inKey: "parameter1"
 	});
 
-	this.treble = new this.EqEffectKnob("[EqualizerRack1_" + this.currentDeck + "_Effect1]", "parameter3", "parameter3");
-	this.mid = new this.EqEffectKnob("[EqualizerRack1_" + this.currentDeck + "_Effect1]", "parameter2", "parameter4");
-	this.bass = new this.EqEffectKnob("[EqualizerRack1_" + this.currentDeck + "_Effect1]", "parameter1", "parameter5");
+	this.filter = new components.Pot({
+		group: "[QuickEffectRack1_" + this.currentDeck + "]",
+		inKey: "super1"
+	});
 
-	this.filter = new this.EqEffectKnob(
-		"[QuickEffectRack1_" + this.currentDeck + "]",
-		"super1",
-		"parameter1",
-		true
-	);
-
-	this.gain = new this.EqEffectKnob(
-		this.currentDeck,
-		"pregain",
-		"parameter2"
-	);
+	this.gain = new components.Pot({
+		inKey: "pregain"
+	});
 
 	this.pitch = new components.Pot({
 		inKey: "rate"
