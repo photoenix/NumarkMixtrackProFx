@@ -168,7 +168,7 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	this.loadButton = new components.Button({
 		inKey: "LoadSelectedTrack",
 		shift: function() {
-			this.group = "[PreviewDeck" + (channel + 1) + "]";
+			this.group = "[PreviewDeck1]";
 		},
 		unshift: function() {
 			this.group = "[Channel" + (channel + 1) + "]";
@@ -355,7 +355,7 @@ MixtrackProFX.Browse = function() {
 		}
 	});
 
-	this.button = new components.Button({
+	this.knobButton = new components.Button({
 		group: "[Library]",
 		inKey: "MoveFocusForward"
 	});

@@ -231,7 +231,7 @@
             </control>
             <control>
                 <group>[Library]</group>
-                <key>MixtrackProFX.browse.button.input</key>
+                <key>MixtrackProFX.browse.knobButton.input</key>
                 <status>0x9F</status>
                 <midino>0x07</midino>
                 <options>
