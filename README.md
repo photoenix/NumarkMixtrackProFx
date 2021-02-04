@@ -6,6 +6,7 @@ Image: [Numark](https://www.numark.com/product/mixtrack-pro-fx)
 ## Working
 * Buttons
   * Play/pause
+  * Stutter
   * Cue
   * Sync
   * Load track

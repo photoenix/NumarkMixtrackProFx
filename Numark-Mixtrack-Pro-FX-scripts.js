@@ -135,15 +135,11 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 	this.playButton = new components.PlayButton({
 		midi: [0x90 + channel, 0x00],
-		off: 0x01,
-		unshift: function() {
-			components.PlayButton.prototype.unshift.call(this);
-			this.type = components.Button.prototype.types.toggle;
-		},
-		shift: function() {
-			this.inKey = "play_stutter";
-			this.type = components.Button.prototype.types.push;
-		},
+		off: 0x01
+	});
+
+	this.playButtonStutter = new components.Button({
+		inKey: "play_stutter"
 	});
 
 	this.cueButton = new components.CueButton({
@@ -232,23 +228,18 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	}
 
 	this.shiftButton = new components.Button({
-		midi: [0x90 + channel, 0x20, 0x80 + channel, 0x20],
 		type: components.Button.prototype.types.powerWindow,
-		state: false,
-		inToggle: function() {
-			this.state = !this.state;
-			if(this.state) {
+		input: function(channel, control, value, status, group) {
+			if(value == 0x7F) {
 				deck.shift();
 				MixtrackProFX.browse.shift();
-				//MixtrackProFX.headGain.shift();
 				MixtrackProFX.effect.shift();
-			} else {
+			} else if (value == 0) {
 				deck.unshift();
 				MixtrackProFX.browse.unshift();
-				//MixtrackProFX.headGain.unshift();
 				MixtrackProFX.effect.unshift();
 			}
-		},
+		}
 	});
 
 	this.loop = new components.Button({
