@@ -47,12 +47,14 @@ MixtrackProFX.init = function(id, debug) {
 
 	midi.sendShortMsg(0x88, 0x09, 0x01); // tap led
 
+	var quantizeEnabled = engine.getValue("[Channel1]", "quantize");
+
 	// effect leds
 	midi.sendShortMsg(0x88, 0x00, 0x01); // hpf
 	midi.sendShortMsg(0x88, 0x01, 0x01); // lpf
 	midi.sendShortMsg(0x88, 0x02, 0x01); // flanger
 	midi.sendShortMsg(0x89, 0x03, 0x01); // echo
-	midi.sendShortMsg(0x89, 0x04, 0x01); // reverb
+	midi.sendShortMsg(0x89, 0x04, quantizeEnabled ? 0x7F : 0x01); // reverb
 	midi.sendShortMsg(0x89, 0x05, 0x01); // phaser
 
 	// vumeters leds (off)
@@ -110,7 +112,9 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 
 	this.tap = new components.Button({
 		group: "[Channel" + this.unitNumber + "]",
-		inKey: "bpm_tap"
+		key: "bpm_tap",
+		midi: [0x88, 0x09],
+		off: 0x01
 	});
 
 	this.effectParam = new components.Encoder({
@@ -261,11 +265,15 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	});
 
 	this.loopHalf = new components.Button({
-		inKey: "loop_halve"
+		key: "loop_halve",
+		midi: [0x94 + channel, 0x34],
+		off: 0x01
 	});
 
 	this.loopDouble = new components.Button({
-		inKey: "loop_double"
+		key: "loop_double",
+		midi: [0x94 + channel, 0x35],
+		off: 0x01
 	});
 
 	this.loopIn = new components.Button({
@@ -306,21 +314,29 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 	this.prevEffect = new components.Button({
 		group: "[EffectRack1_EffectUnit" + number + "_Effect1]",
-		inKey: "prev_effect"
+		key: "prev_effect",
+		midi: [0x98, channel*2],
+		off: 0x01
 	});
 
 	this.nextEffect = new components.Button({
 		group: "[EffectRack1_EffectUnit" + number + "_Effect1]",
-		inKey: "next_effect"
+		key: "next_effect",
+		midi: [0x99, 0x03 + channel*2],
+		off: 0x01
 	});
 
 	this.beatsnap = new components.Button({
 		type: components.Button.prototype.types.toggle,
-		inKey: "quantize"
+		key: "quantize",
+		midi: [0x89, 0x04],
+		off: 0x01
 	});
 
 	this.setBeatgrid = new components.Button({
-		inKey: "beats_translate_curpos"
+		key: "beats_translate_curpos",
+		midi: [0x88, 0x01],
+		off: 0x01
 	});
 
 	this.reconnectComponents(function(component) {
