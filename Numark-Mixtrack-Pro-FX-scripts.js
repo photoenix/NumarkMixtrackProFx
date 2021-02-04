@@ -7,12 +7,12 @@ MixtrackProFX.shifted = false;
 // initialization
 MixtrackProFX.init = function(id, debug) {
 	MixtrackProFX.effect = new components.ComponentContainer();
-	MixtrackProFX.effect[1] = new MixtrackProFX.EffectUnit(1);
-	MixtrackProFX.effect[2] = new MixtrackProFX.EffectUnit(2);
+	MixtrackProFX.effect[0] = new MixtrackProFX.EffectUnit(1);
+	MixtrackProFX.effect[1] = new MixtrackProFX.EffectUnit(2);
 
 	MixtrackProFX.deck = new components.ComponentContainer();
-	MixtrackProFX.deck[1] = new MixtrackProFX.Deck(1);
-	MixtrackProFX.deck[2] = new MixtrackProFX.Deck(2);
+	MixtrackProFX.deck[0] = new MixtrackProFX.Deck(1);
+	MixtrackProFX.deck[1] = new MixtrackProFX.Deck(2);
 
 	MixtrackProFX.browse = new MixtrackProFX.Browse();
 	MixtrackProFX.headGain = new MixtrackProFX.HeadGain();
