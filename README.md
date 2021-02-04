@@ -38,7 +38,7 @@ Image: [Numark](https://www.numark.com/product/mixtrack-pro-fx)
   * Crossfader
   * Pitch fader
 * Master VU meter
-* Jogwheel (pitch/scratch)
+* Jogwheel (pitch/scratch/seek)
 * FX on/off
 
 ## Kinda working
@@ -46,7 +46,6 @@ Image: [Numark](https://www.numark.com/product/mixtrack-pro-fx)
 
 ## Not working
 * Pad mode switches (cue, auto loop, fader cuts, samples)
-* Jogwheel quick seek
 * Reset BPM (shift + tap)
 
 ## FX select buttons

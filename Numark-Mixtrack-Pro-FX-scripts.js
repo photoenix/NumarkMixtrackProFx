@@ -2,6 +2,8 @@ var MixtrackProFX = {};
 
 MixtrackProFX.pitchRanges = [0.08, 0.16, 1];
 
+MixtrackProFX.shifted = false;
+
 // initialization
 MixtrackProFX.init = function(id, debug) {
 	MixtrackProFX.effect = new components.ComponentContainer();
@@ -231,10 +233,12 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 		type: components.Button.prototype.types.powerWindow,
 		input: function(channel, control, value, status, group) {
 			if(value == 0x7F) {
+				MixtrackProFX.shifted = true;
 				deck.shift();
 				MixtrackProFX.browse.shift();
 				MixtrackProFX.effect.shift();
 			} else if (value == 0) {
+				MixtrackProFX.shifted = false;
 				deck.unshift();
 				MixtrackProFX.browse.unshift();
 				MixtrackProFX.effect.unshift();
@@ -375,172 +379,59 @@ MixtrackProFX.HeadGain.prototype = new components.Pot({
 	inKey: "headGain",
 });
 
-MixtrackProFX.scratchEnabled = [true, true];
+MixtrackProFX.scratching = [false, false];
+MixtrackProFX.scratchModeEnabled = [true, true];
 
 MixtrackProFX.scratchToggle = function(channel, control, value, status, group) {
-	MixtrackProFX.scratchEnabled[channel] = !MixtrackProFX.scratchEnabled[channel];
-	midi.sendShortMsg(0x90 | channel, 0x07, MixtrackProFX.scratchEnabled[channel] ? 0x7F : 0x01);
+	MixtrackProFX.scratchModeEnabled[channel] = !MixtrackProFX.scratchModeEnabled[channel];
+	midi.sendShortMsg(0x90 | channel, 0x07, MixtrackProFX.scratchModeEnabled[channel] ? 0x7F : 0x01);
 };
 
-MixtrackProFX.scratch_timer = [];
-MixtrackProFX.scratch_tick = [];
+MixtrackProFX.wheelTouch = function (channel, control, value, status, group) {
+	var deckNumber = channel + 1;
 
-MixtrackProFX.startScratchTimer = function(deck) {
-	if(MixtrackProFX.scratch_timer[deck])
-		return;
+	if (MixtrackProFX.shifted)
+		return; // seeking
 
-	MixtrackProFX.scratch_tick[deck] = 0;
-	//MixtrackProFX.scratch_timer[deck] = engine.beginTimer(20, function(){
-	//	MixtrackProFX.scratchTimerCallback(deck);
-	//});
-};
+	if (MixtrackProFX.scratchModeEnabled[channel] && value == 0x7F) {
+		// touch start
+		var alpha = 1.0/8;
+		var beta = alpha/32;
 
-MixtrackProFX.stopScratchTimer = function(deck) {
-	if(MixtrackProFX.scratch_timer[deck])
-		engine.stopTimer(MixtrackProFX.scratch_timer[deck]);
+		engine.scratchEnable(deckNumber, 2048, 33+1/3, alpha, beta);
+		MixtrackProFX.scratching[channel] = true;
+	} else if (value == 0) {
+		// touch end
+		engine.scratchDisable(deckNumber);
+		MixtrackProFX.scratching[channel] = false;
+	}
+}
 
-	MixtrackProFX.scratch_timer[deck] = null;
-};
+MixtrackProFX.wheelTurn = function (channel, control, value, status, group) {
+	var deckNumber = channel + 1;
 
-MixtrackProFX.resetScratchTimer = function(deck, tick) {
-	if(!MixtrackProFX.scratch_timer[deck])
-		return;
+	var newValue = value;
+	var backwards = false;
 
-	MixtrackProFX.scratch_tick[deck] = tick;
-};
-
-/*MixtrackProFX.scratchTimerCallback = function(deck){
-	if((MixtrackProFX.scratch_direction[deck]
-		&& Math.abs(MixtrackProFX.scratch_tick[deck]) > 2)
-		|| (!MixtrackProFX.scratch_direction[deck]
-			&& Math.abs(MixtrackProFX.scratch_tick[deck]) > 1))
+	if (value >= 64)
 	{
-		MixtrackProFX.scratch_tick[deck] = 0;
-		return;
+		newValue -= 128;
+		backwards = true;
 	}
 
-	MixtrackProFX.scratchDisable(deck);
-};*/
-
-MixtrackProFX.scratchEnable = function(deck) {
-	var alpha = 1.0/8;
-	var beta = alpha/32;
-
-	engine.scratchEnable(deck, 1240, 33+1/3, alpha, beta);
-
-	MixtrackProFX.stopScratchTimer(deck);
-};
-
-MixtrackProFX.scratchDisable = function(deck) {
-	MixtrackProFX.searching[deck] = false;
-	MixtrackProFX.stopScratchTimer(deck);
-	engine.scratchDisable(deck, false);
-};
-
-MixtrackProFX.scratch_direction = [null, null, null];
-MixtrackProFX.scratch_accumulator = [0, 0, 0];
-MixtrackProFX.last_scratch_tick = [0, 0, 0];
-
-MixtrackProFX.wheelTurn = function(channel, control, value, status, group) {
-	var deck = channel + 1;
-	var direction;
-	var newValue;
-
-	if(value < 64)
-		direction = true;
-	else
-		direction = false;
-
-	var delta = Math.abs(MixtrackProFX.last_scratch_tick[deck] - value);
-	if (MixtrackProFX.scratch_direction[deck] !== null && MixtrackProFX.scratch_direction[deck] != direction && delta < 64)
-		direction = !direction;
-
-	if (direction)
-		newValue = value;
-	else
-		newValue = value - 128;
-
-	if(MixtrackProFX.searching[deck]) {
-		var position = engine.getValue(group, "playposition");
-
-		if(position <= 0)
-			position = 0;
-		if(position >= 1)
-			position = 1;
-
-		engine.setValue(group, "playposition", position + newValue * 0.0001);
-		MixtrackProFX.resetScratchTimer(deck, newValue);
-
-		return;
-	}
-
-	if(MixtrackProFX.scratch_direction[deck] === null) {
-		MixtrackProFX.scratch_direction[deck] = direction;
-	}
-	else if(MixtrackProFX.scratch_direction[deck] != direction) {
-		if(!MixtrackProFX.touching[deck]) {
-			MixtrackProFX.scratchDisable(deck);
-		}
-
-		MixtrackProFX.scratch_accumulator[deck] = 0;
-	}
-
-	MixtrackProFX.last_scratch_tick[deck] = value;
-	MixtrackProFX.scratch_direction[deck] = direction;
-	MixtrackProFX.scratch_accumulator[deck] += Math.abs(newValue);
-
-	if (engine.isScratching(deck)) {
-		engine.scratchTick(deck, newValue);
-		MixtrackProFX.resetScratchTimer(deck, newValue);
-	}
-	else if(MixtrackProFX.shift) {
-		if (MixtrackProFX.scratch_accumulator[deck] > 61) {
-			MixtrackProFX.scratch_accumulator[deck] -= 61;
-			if (direction) { // forward
-				engine.setParameter(group, "beatjump_1_forward", 1);
-			} else {
-				engine.setParameter(group, "beatjump_1_backward", 1);
-			}
-		}
+	if (MixtrackProFX.shifted)
+	{
+		// seek
+		if (backwards)
+			engine.setParameter(group, "beatjump_1_backward", 1);
+		else
+			engine.setParameter(group, "beatjump_1_forward", 1);
+	} else if (MixtrackProFX.scratchModeEnabled[channel] && engine.isScratching(deckNumber)) {
+		engine.scratchTick(deckNumber, newValue); // scratch
 	} else {
-		engine.setValue(group, "jog", newValue * 0.1);
+		engine.setValue(group, "jog", newValue); // pitch bend
 	}
-};
-
-MixtrackProFX.touching = [false, false, false];
-MixtrackProFX.searching = [false, false, false];
-
-MixtrackProFX.wheelTouch = function(channel, control, value, status, group) {
-	var deck = channel + 1;
-
-	if(!MixtrackProFX.shift
-		&& !MixtrackProFX.searching[deck]
-		&& !MixtrackProFX.scratchEnabled[channel]
-		&& value != 0)
-	{
-		return;
-	}
-
-	MixtrackProFX.touching[deck] = 0x7F == value;
-
-	if(value === 0x7F
-		&& !MixtrackProFX.shift
-		&& !MixtrackProFX.searching[deck])
-	{
-		MixtrackProFX.scratchEnable(deck);
-	}
-	else if(value === 0x7F
-		&& (MixtrackProFX.shift
-		|| MixtrackProFX.searching[deck]))
-	{
-		MixtrackProFX.scratchDisable(deck);
-		MixtrackProFX.searching[deck] = true;
-		MixtrackProFX.stopScratchTimer(deck);
-	}
-	else {
-		MixtrackProFX.startScratchTimer(deck);
-	}
-};
+}
 
 MixtrackProFX.vuCallback = function(value, group, control) {
 	var level = value * 90;
