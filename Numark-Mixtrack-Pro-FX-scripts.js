@@ -127,7 +127,7 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 				this.inSetParameter(this.inGetParameter() + 0.05);
 			else if (value == 0x7F)
 				this.inSetParameter(this.inGetParameter() - 0.05);
-		},
+		}
 	});
 };
 
@@ -150,19 +150,19 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 	this.cueButton = new components.CueButton({
 		midi: [0x90 + channel, 0x01],
-		off: 0x01,
+		off: 0x01
 	});
 
 	this.syncButton = new components.SyncButton({
 		midi: [0x90 + channel, 0x02],
-		off: 0x01,
+		off: 0x01
 	});
 
 	this.pflButton = new components.Button({
 		type: components.Button.prototype.types.toggle,
 		midi: [0x90 + channel, 0x1B],
 		off: 0x01,
-		key: "pfl",
+		key: "pfl"
 	});
 
 	this.loadButton = new components.Button({
@@ -172,7 +172,7 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 		},
 		unshift: function() {
 			this.group = "[Channel" + (channel + 1) + "]";
-		},
+		}
 	});
 
 	this.volume = new components.Pot({
@@ -194,7 +194,7 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 		components.Pot.call(this, {
 			group: group,
-			inKey: inKey,
+			inKey: inKey
 		});
 	};
 
@@ -229,7 +229,7 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 			midi: [0x94 + channel, 0x14 + i - 1],
 			number: i,
 			group: this.currentDeck,
-			off: 0x01,
+			off: 0x01
 		});
 	}
 
@@ -289,17 +289,17 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 	this.pitchBendUp = new components.Button({
 		type: components.Button.prototype.types.powerWindow,
-		key: "rate_temp_up",
+		key: "rate_temp_up"
 	});
 
 	this.pitchBendDown = new components.Button({
 		type: components.Button.prototype.types.powerWindow,
-		key: "rate_temp_down",
+		key: "rate_temp_down"
 	});
 
 	this.keylock = new components.Button({
 		type: components.Button.prototype.types.toggle,
-		inKey: "keylock",
+		inKey: "keylock"
 	});
 
 	this.pitchRange = new components.Button({
@@ -380,7 +380,7 @@ MixtrackProFX.HeadGain = function() {
 
 MixtrackProFX.HeadGain.prototype = new components.Pot({
 	group: "[Master]",
-	inKey: "headGain",
+	inKey: "headGain"
 });
 
 MixtrackProFX.scratching = [false, false];
