@@ -31,10 +31,10 @@ MixtrackProFX.init = function(id, debug) {
 		midi.sendShortMsg(0x90 + i, 0x07, 0x7f); // scratch
 		midi.sendShortMsg(0x90 + i, 0x1B, 0x01); // pfl
 
-		midi.sendShortMsg(0x94 + i, 0x00, 0x01); // cue
-		midi.sendShortMsg(0x94 + i, 0x0D, 0x01); // auto
-		midi.sendShortMsg(0x94 + i, 0x07, 0x01); // fader
-		midi.sendShortMsg(0x94 + i, 0x0B, 0x01); // sample
+		midi.sendShortMsg(0x94 + i, 0x00, 0x7F); // cue
+		//midi.sendShortMsg(0x94 + i, 0x0D, 0x01); // auto
+		//midi.sendShortMsg(0x94 + i, 0x07, 0x01); // fader
+		//midi.sendShortMsg(0x94 + i, 0x0B, 0x01); // sample
 
 		midi.sendShortMsg(0x94 + i, 0x34, 0x01); // half
 		midi.sendShortMsg(0x94 + i, 0x35, 0x01); // double
@@ -209,14 +209,21 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 		inKey: "rate"
 	});
 
-	this.hotcueButton = new components.ComponentContainer();
+	this.pads = [];
+	this.padsShift = [];
 
-	for(var i = 1; i <= 4; i++) {
-		this.hotcueButton[i] = new components.HotcueButton({
-			midi: [0x94 + channel, 0x14 + i - 1],
-			number: i,
+	for(var i = 0; i < 8; i++) {
+		this.pads[i] = new components.Button({
 			group: this.currentDeck,
+			midi: [0x94 + channel, 0x14 + i],
+			inKey: "hotcue_" + (i + 1) + "_activate",
+			outKey: "hotcue_" + (i + 1) + "_enabled",
 			off: 0x01
+		});
+
+		this.padsShift[i] = new components.Button({
+			group: this.currentDeck,
+			inKey: "hotcue_" + (i + 1) + "_clear"
 		});
 	}
 

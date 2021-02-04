@@ -22,6 +22,9 @@ Image: Numark
   * Tap BPM
   * Key lock
   * Pitch range (ranges configurable in first lines of the script, by default: 8%, 16%, 100%)
+* Pads
+  * Hotcues
+  * Delete hotcues
 * Knobs
   * Master gain
   * Mic gain
@@ -41,11 +44,10 @@ Image: Numark
 * Jogwheel (pitch/scratch/seek)
 * FX on/off
 
-## Kinda working
-* Pads (only hotcue, can't delete hotcues)
-
 ## Not working
-* Pad mode switches (cue, auto loop, fader cuts, samples)
+* Auto loop
+* Fader cuts
+* Samples
 * Reset BPM (shift + tap)
 
 ## FX select buttons
