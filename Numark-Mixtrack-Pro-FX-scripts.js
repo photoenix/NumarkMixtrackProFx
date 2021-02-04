@@ -11,8 +11,8 @@ MixtrackProFX.init = function(id, debug) {
 	MixtrackProFX.effect[2] = new MixtrackProFX.EffectUnit(2);
 
 	MixtrackProFX.deck = new components.ComponentContainer();
-	MixtrackProFX.deck[1] = new MixtrackProFX.Deck(1, 0, MixtrackProFX.effect[1]);
-	MixtrackProFX.deck[2] = new MixtrackProFX.Deck(2, 1, MixtrackProFX.effect[2]);
+	MixtrackProFX.deck[1] = new MixtrackProFX.Deck(1);
+	MixtrackProFX.deck[2] = new MixtrackProFX.Deck(2);
 
 	MixtrackProFX.browse = new MixtrackProFX.Browse();
 	MixtrackProFX.headGain = new MixtrackProFX.HeadGain();
@@ -73,7 +73,7 @@ MixtrackProFX.shutdown = function() {
 
 // effect
 MixtrackProFX.EffectUnit = function(unitNumber) {
-	var eu = this;
+	//var eu = this;
 	this.unitNumber = unitNumber;
 	this.group = "[EffectRack1_EffectUnit" + unitNumber + "]";
 
@@ -137,9 +137,9 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 
 MixtrackProFX.EffectUnit.prototype = new components.ComponentContainer();
 
-// deck
-MixtrackProFX.Deck = function(number, channel, effect) {
+MixtrackProFX.Deck = function(number) {
 	var deck = this;
+	var channel = number - 1;
 
 	components.Deck.call(this, number);
 
@@ -180,9 +180,8 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 	});
 
 	this.volume = new components.Pot({
-		midi: [0xB0 + channel, 0x1C],
 		group: this.currentDeck,
-		inKey: "volume",
+		inKey: "volume"
 	});
 
 	this.treble = new components.Pot({
@@ -286,17 +285,17 @@ MixtrackProFX.Deck = function(number, channel, effect) {
 
 	this.bleep = new components.Button({
 		type: components.Button.prototype.types.powerWindow,
-		key: "reverseroll"
+		inKey: "reverseroll"
 	});
 
 	this.pitchBendUp = new components.Button({
 		type: components.Button.prototype.types.powerWindow,
-		key: "rate_temp_up"
+		inKey: "rate_temp_up"
 	});
 
 	this.pitchBendDown = new components.Button({
 		type: components.Button.prototype.types.powerWindow,
-		key: "rate_temp_down"
+		inKey: "rate_temp_down"
 	});
 
 	this.keylock = new components.Button({
@@ -354,9 +353,9 @@ MixtrackProFX.Browse = function() {
 		group: "[Library]",
 		inKey: "Move",
 		input: function (channel, control, value, status, group) {
-			if (value === 1)
+			if (value == 0x01)
 				engine.setParameter(this.group, this.inKey + "Down", 1);
-			else if (value === 127)
+			else if (value == 0x7F)
 				engine.setParameter(this.group, this.inKey + "Up", 1);
 		}
 	});
@@ -364,9 +363,9 @@ MixtrackProFX.Browse = function() {
 	this.knobShift = new components.Encoder({
 		group: "[Channel1]", // if it's stupid and works, then it's not stupid
 		input: function (channel, control, value, status, group) {
-			if (value === 1)
+			if (value == 0x01)
 				engine.setParameter(this.group, "waveform_zoom_up", 1);
-			else if (value === 127)
+			else if (value == 0x7F)
 				engine.setParameter(this.group, "waveform_zoom_down", 1);
 		}
 	});
