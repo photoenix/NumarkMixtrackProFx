@@ -30,9 +30,9 @@ MixtrackProFX.init = function(id, debug) {
 		midi.sendShortMsg(0x90 + i, 0x07, 0x7f); // scratch
 		midi.sendShortMsg(0x90 + i, 0x1B, 0x01); // pfl
 
-		midi.sendShortMsg(0x94 + i, 0x00, 0x7F); // cue
-		//midi.sendShortMsg(0x94 + i, 0x0D, 0x01); // auto
-		//midi.sendShortMsg(0x94 + i, 0x07, 0x01); // fader
+		midi.sendShortMsg(0x94 + i, 0x00, 0x7F); // hotcue
+		midi.sendShortMsg(0x94 + i, 0x0D, 0x01); // auto loop
+		//midi.sendShortMsg(0x94 + i, 0x07, 0x01); // fader cuts
 		midi.sendShortMsg(0x94 + i, 0x0B, 0x01); // sample
 
 		midi.sendShortMsg(0x94 + i, 0x34, 0x01); // half
@@ -231,7 +231,8 @@ MixtrackProFX.Deck = function(number) {
 
 	this.modeHotcue = new components.Button({
 		input: function(channel, control, value, status, group) {
-			midi.sendShortMsg(0x90 + channel, 0x00, 0x7F); // cue
+			midi.sendShortMsg(0x90 + channel, 0x00, 0x7F); // hotcue
+			midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
 			midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
 
 			for(var i = 0; i < 8; i++) {
@@ -248,9 +249,54 @@ MixtrackProFX.Deck = function(number) {
 		}
 	});
 
+	this.modeAutoloop = new components.Button({
+		input: function(channel, control, value, status, group) {
+			midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // hotcue
+			midi.sendShortMsg(0x90 + channel, 0x0D, 0x7F); // auto loop
+			midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
+
+			// this is just sad
+			deck.pads[0].inKey = "beatloop_0.0625_toggle";
+			deck.pads[0].outKey = "beatloop_0.0625_enabled";
+			deck.pads[1].inKey = "beatloop_0.125_toggle";
+			deck.pads[1].outKey = "beatloop_0.125_enabled";
+			deck.pads[2].inKey = "beatloop_0.25_toggle";
+			deck.pads[2].outKey = "beatloop_0.25_enabled";
+			deck.pads[3].inKey = "beatloop_0.5_toggle";
+			deck.pads[3].outKey = "beatloop_0.5_enabled";
+			deck.pads[4].inKey = "beatloop_1_toggle";
+			deck.pads[4].outKey = "beatloop_1_enabled";
+			deck.pads[5].inKey = "beatloop_2_toggle";
+			deck.pads[5].outKey = "beatloop_2_enabled";
+			deck.pads[6].inKey = "beatloop_4_toggle";
+			deck.pads[6].outKey = "beatloop_4_enabled";
+			deck.pads[7].inKey = "beatloop_8_toggle";
+			deck.pads[7].outKey = "beatloop_8_enabled";
+
+			deck.padsShift[0].inKey = "beatlooproll_0.0625_activate";
+			deck.padsShift[1].inKey = "beatlooproll_0.125_activate";
+			deck.padsShift[2].inKey = "beatlooproll_0.25_activate";
+			deck.padsShift[3].inKey = "beatlooproll_0.5_activate";
+			deck.padsShift[4].inKey = "beatlooproll_1_activate";
+			deck.padsShift[5].inKey = "beatlooproll_2_activate";
+			deck.padsShift[6].inKey = "beatlooproll_4_activate";
+			deck.padsShift[7].inKey = "beatlooproll_8_activate";
+
+			for(var i = 0; i < 8; i++) {
+				deck.pads[i].group = deck.currentDeck;
+
+				deck.padsShift[i].type = components.Button.prototype.types.push;
+				deck.padsShift[i].group = deck.currentDeck;
+			}
+
+			deck.pads.reconnectComponents();
+		}
+	});
+
 	this.modeSample = new components.Button({
 		input: function(channel, control, value, status, group) {
-			midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // cue
+			midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // hotcue
+			midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
 			midi.sendShortMsg(0x90 + channel, 0x0B, 0x7F); // sample
 
 			for(var i = 0; i < 8; i++) {
