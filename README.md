@@ -25,6 +25,7 @@ Image: Numark
 * Pads
   * Hotcues
   * Delete hotcues
+  * Samples
 * Knobs
   * Master gain
   * Mic gain
@@ -47,7 +48,6 @@ Image: Numark
 ## Not working
 * Auto loop
 * Fader cuts
-* Samples
 * Reset BPM (shift + tap)
 
 ## FX select buttons

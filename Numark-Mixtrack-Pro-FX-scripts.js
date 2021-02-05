@@ -1,7 +1,6 @@
 var MixtrackProFX = {};
 
 MixtrackProFX.pitchRanges = [0.08, 0.16, 1];
-
 MixtrackProFX.shifted = false;
 
 // initialization
@@ -34,7 +33,7 @@ MixtrackProFX.init = function(id, debug) {
 		midi.sendShortMsg(0x94 + i, 0x00, 0x7F); // cue
 		//midi.sendShortMsg(0x94 + i, 0x0D, 0x01); // auto
 		//midi.sendShortMsg(0x94 + i, 0x07, 0x01); // fader
-		//midi.sendShortMsg(0x94 + i, 0x0B, 0x01); // sample
+		midi.sendShortMsg(0x94 + i, 0x0B, 0x01); // sample
 
 		midi.sendShortMsg(0x94 + i, 0x34, 0x01); // half
 		midi.sendShortMsg(0x94 + i, 0x35, 0x01); // double
@@ -229,6 +228,39 @@ MixtrackProFX.Deck = function(number) {
 			inKey: "hotcue_" + (i + 1) + "_clear"
 		});
 	}
+
+	this.modeHotcue = new components.Button({
+		input: function (channel, control, value, status, group) {
+			midi.sendShortMsg(0x90 + channel, 0x00, 0x7F); // cue
+			midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
+
+			for(var i = 0; i < 8; i++) {
+				deck.pads[i].group = deck.currentDeck;
+				deck.pads[i].inKey = "hotcue_" + (i + 1) + "_activate";
+				deck.pads[i].outKey = "hotcue_" + (i + 1) + "_enabled";
+				deck.padsShift[i].group = deck.currentDeck;
+				deck.padsShift[i].inKey = "hotcue_" + (i + 1) + "_clear";
+				var hotcueSet = engine.getValue(deck.currentDeck, "hotcue_" + (i + 1) + "_enabled") == 1;
+				midi.sendShortMsg(0x90 + channel, 0x14 + i, hotcueSet ? 0x7F : 0x01);
+			}
+		}
+	});
+
+	this.modeSample = new components.Button({
+		input: function (channel, control, value, status, group) {
+			midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // cue
+			midi.sendShortMsg(0x90 + channel, 0x0B, 0x7F); // sample
+
+			for(var i = 0; i < 8; i++) {
+				deck.pads[i].group = "[Sampler" + (i + 1) + "]";
+				deck.pads[i].inKey = "cue_gotoandplay";
+				deck.pads[i].outKey = "play"; // TODO why won't this work?
+				deck.padsShift[i].group = "[Sampler" + (i + 1) + "]";
+				deck.padsShift[i].inKey = "cue_gotoandplay"; // idk what to put here
+				midi.sendShortMsg(0x90 + channel, 0x14 + i, 0x01);
+			}
+		}
+	});
 
 	this.shiftButton = new components.Button({
 		type: components.Button.prototype.types.powerWindow,

@@ -14,6 +14,42 @@
         </scriptfiles>
         <controls>
             <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[0].modeSample.input</key>
+                <status>0x94</status>
+                <midino>0x0B</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[1].modeSample.input</key>
+                <status>0x95</status>
+                <midino>0x0B</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel1]</group>
+                <key>MixtrackProFX.deck[0].modeHotcue.input</key>
+                <status>0x94</status>
+                <midino>0x00</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
+                <group>[Channel2]</group>
+                <key>MixtrackProFX.deck[1].modeHotcue.input</key>
+                <status>0x95</status>
+                <midino>0x00</midino>
+                <options>
+                    <script-binding/>
+                </options>
+            </control>
+            <control>
                 <group>[EqualizerRack1_[Channel2]_Effect1]</group>
                 <key>MixtrackProFX.deck[1].treble.input</key>
                 <status>0xB1</status>
