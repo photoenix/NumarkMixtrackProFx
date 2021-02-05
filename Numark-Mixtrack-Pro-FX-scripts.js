@@ -211,8 +211,8 @@ MixtrackProFX.Deck = function(number) {
 		inKey: "rate"
 	});
 
-	this.pads = [];
-	this.padsShift = [];
+	this.pads = new components.ComponentContainer();
+	this.padsShift = new components.ComponentContainer();
 
 	for(var i = 0; i < 8; i++) {
 		this.pads[i] = new components.Button({
@@ -238,11 +238,13 @@ MixtrackProFX.Deck = function(number) {
 				deck.pads[i].group = deck.currentDeck;
 				deck.pads[i].inKey = "hotcue_" + (i + 1) + "_activate";
 				deck.pads[i].outKey = "hotcue_" + (i + 1) + "_enabled";
+
+				deck.padsShift[i].type = components.Button.prototype.types.push;
 				deck.padsShift[i].group = deck.currentDeck;
 				deck.padsShift[i].inKey = "hotcue_" + (i + 1) + "_clear";
-				var hotcueSet = engine.getValue(deck.currentDeck, "hotcue_" + (i + 1) + "_enabled") == 1;
-				midi.sendShortMsg(0x90 + channel, 0x14 + i, hotcueSet ? 0x7F : 0x01);
 			}
+
+			deck.pads.reconnectComponents();
 		}
 	});
 
@@ -254,11 +256,14 @@ MixtrackProFX.Deck = function(number) {
 			for(var i = 0; i < 8; i++) {
 				deck.pads[i].group = "[Sampler" + (i + 1) + "]";
 				deck.pads[i].inKey = "cue_gotoandplay";
-				deck.pads[i].outKey = "play"; // TODO why won't this work?
+				deck.pads[i].outKey = "play";
+
+				deck.padsShift[i].type = components.Button.prototype.types.toggle;
 				deck.padsShift[i].group = "[Sampler" + (i + 1) + "]";
-				deck.padsShift[i].inKey = "cue_gotoandplay"; // idk what to put here
-				midi.sendShortMsg(0x90 + channel, 0x14 + i, 0x01);
+				deck.padsShift[i].inKey = "repeat";
 			}
+
+			deck.pads.reconnectComponents();
 		}
 	});
 

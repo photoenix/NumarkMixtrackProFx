@@ -61,6 +61,7 @@ Image: Numark
 * Shift + browse knob press = select item (collapse/extend tree or load track)
 * Shift + FX param knob = FX param2
 * Shift + load = load track to preview deck
+* Shift + sample = toggle repeat sample
 
 ## Notes
 Please note that the Pro FX is my first controller and I'm very new to DJing, so I may not know how some advanced controller features are supposed to work like. I'm just trying to replicate the controller's behaviour inside VirtualDJ. Also, I don't know if it's just me, but I find the Mixxx scripting API extremely confusing, so there might be some stupid mistakes in code.
