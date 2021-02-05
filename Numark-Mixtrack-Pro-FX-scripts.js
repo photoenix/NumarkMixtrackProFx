@@ -125,7 +125,7 @@ MixtrackProFX.EffectUnit = function(unitNumber) {
 		unshift: function() {
 			this.inKey = "parameter1";
 		},
-		input: function (channel, control, value, status, group) {
+		input: function(channel, control, value, status, group) {
 			if (value == 0x01)
 				this.inSetParameter(this.inGetParameter() + 0.05);
 			else if (value == 0x7F)
@@ -230,7 +230,7 @@ MixtrackProFX.Deck = function(number) {
 	}
 
 	this.modeHotcue = new components.Button({
-		input: function (channel, control, value, status, group) {
+		input: function(channel, control, value, status, group) {
 			midi.sendShortMsg(0x90 + channel, 0x00, 0x7F); // cue
 			midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
 
@@ -249,7 +249,7 @@ MixtrackProFX.Deck = function(number) {
 	});
 
 	this.modeSample = new components.Button({
-		input: function (channel, control, value, status, group) {
+		input: function(channel, control, value, status, group) {
 			midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // cue
 			midi.sendShortMsg(0x90 + channel, 0x0B, 0x7F); // sample
 
@@ -389,7 +389,7 @@ MixtrackProFX.Browse = function() {
 	this.knob = new components.Encoder({
 		group: "[Library]",
 		inKey: "Move",
-		input: function (channel, control, value, status, group) {
+		input: function(channel, control, value, status, group) {
 			if (value == 0x01)
 				engine.setParameter(this.group, this.inKey + "Down", 1);
 			else if (value == 0x7F)
@@ -399,7 +399,7 @@ MixtrackProFX.Browse = function() {
 
 	this.knobShift = new components.Encoder({
 		group: "[Channel1]", // if it's stupid and works, then it's not stupid
-		input: function (channel, control, value, status, group) {
+		input: function(channel, control, value, status, group) {
 			if (value == 0x01)
 				engine.setParameter(this.group, "waveform_zoom_up", 1);
 			else if (value == 0x7F)
