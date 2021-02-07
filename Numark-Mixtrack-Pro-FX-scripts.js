@@ -208,7 +208,8 @@ MixtrackProFX.Deck = function(number) {
 	});
 
 	this.pitch = new components.Pot({
-		inKey: "rate"
+		inKey: "rate",
+		invert: true
 	});
 
 	this.pads = new components.ComponentContainer();
@@ -430,7 +431,6 @@ MixtrackProFX.Deck = function(number) {
 
 MixtrackProFX.Deck.prototype = new components.Deck();
 
-// browse
 MixtrackProFX.Browse = function() {
 	this.knob = new components.Encoder({
 		group: "[Library]",
@@ -447,9 +447,9 @@ MixtrackProFX.Browse = function() {
 		group: "[Channel1]", // if it's stupid and works, then it's not stupid
 		input: function(channel, control, value, status, group) {
 			if (value == 0x01)
-				engine.setParameter(this.group, "waveform_zoom_up", 1);
-			else if (value == 0x7F)
 				engine.setParameter(this.group, "waveform_zoom_down", 1);
+			else if (value == 0x7F)
+				engine.setParameter(this.group, "waveform_zoom_up", 1);
 		}
 	});
 
