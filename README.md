@@ -6,7 +6,6 @@ Image: Numark
 ## Working
 * Buttons
   * Play/pause
-  * Stutter
   * Cue
   * Sync
   * Load track
@@ -61,11 +60,10 @@ Image: Numark
 * Shift + browse knob press = select item (collapse/extend tree or load track)
 * Shift + FX param knob = FX param2
 * Shift + load = load track to preview deck
-* Shift + sample = toggle repeat sample
+* Shift + sample = stop sample playback
+* Shift + play = stutter
+* Shift + cue = stop and go to track start
 
 ## Known bugs
 * Starting playback from hotcue or cue button will not "unpause" the deck (play/pause button has to be pressed twice to stop track). I think this is a Mixxx bug and don't really know how to handle this.
 * Pressing shift will disable all lights on a deck. I don't know how to change this behaviour.
-
-## Notes
-Please note that the Pro FX is my first controller and I'm very new to DJing, so I may not know how some advanced controller features are supposed to work like. I'm just trying to replicate the controller's behaviour inside VirtualDJ. Also, I don't know if it's just me, but I find the Mixxx scripting API extremely confusing, so there might be some stupid mistakes in code.

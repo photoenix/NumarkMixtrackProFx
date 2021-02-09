@@ -134,9 +134,16 @@ MixtrackProFX.Deck = function(number) {
 		inKey: "play_stutter"
 	});
 
-	this.cueButton = new components.CueButton({
+	this.cueButton = new components.Button({
+		type: components.Button.prototype.types.powerWindow,
 		midi: [0x90 + channel, 0x01],
-		off: 0x01
+		off: 0x01,
+		inKey: "cue_default",
+		outKey: "cue_indicator"
+	});
+
+	this.cueButtonShift = new components.Button({
+		inKey: "start_stop"
 	});
 
 	this.syncButton = new components.SyncButton({
@@ -225,7 +232,6 @@ MixtrackProFX.Deck = function(number) {
 				deck.pads[i].inKey = "hotcue_" + (i + 1) + "_activate";
 				deck.pads[i].outKey = "hotcue_" + (i + 1) + "_enabled";
 
-				deck.padsShift[i].type = components.Button.prototype.types.push;
 				deck.padsShift[i].group = deck.currentDeck;
 				deck.padsShift[i].inKey = "hotcue_" + (i + 1) + "_clear";
 			}
@@ -271,7 +277,6 @@ MixtrackProFX.Deck = function(number) {
 			for(var i = 0; i < 8; i++) {
 				deck.pads[i].group = deck.currentDeck;
 
-				deck.padsShift[i].type = components.Button.prototype.types.push;
 				deck.padsShift[i].group = deck.currentDeck;
 			}
 
@@ -291,9 +296,8 @@ MixtrackProFX.Deck = function(number) {
 				deck.pads[i].inKey = "cue_gotoandplay";
 				deck.pads[i].outKey = "play";
 
-				deck.padsShift[i].type = components.Button.prototype.types.toggle;
 				deck.padsShift[i].group = "[Sampler" + (i + 1) + "]";
-				deck.padsShift[i].inKey = "repeat";
+				deck.padsShift[i].inKey = "start_stop";
 			}
 
 			deck.pads.reconnectComponents();
