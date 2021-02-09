@@ -1,14 +1,20 @@
 var MixtrackProFX = {};
 
+// configure to your liking
+// setting is stored per deck in pitchRange.currentRangeIdx
 MixtrackProFX.pitchRanges = [0.08, 0.16, 1];
-MixtrackProFX.shifted = false;
 
-// initialization
+MixtrackProFX.shifted = false;
+MixtrackProFX.scratching = [false, false];
+MixtrackProFX.scratchModeEnabled = [true, true];
+
 MixtrackProFX.init = function(id, debug) {
+	// effects for both decks
 	MixtrackProFX.effect = new components.ComponentContainer();
 	MixtrackProFX.effect[0] = new MixtrackProFX.EffectUnit(1);
 	MixtrackProFX.effect[1] = new MixtrackProFX.EffectUnit(2);
 
+	// decks
 	MixtrackProFX.deck = new components.ComponentContainer();
 	MixtrackProFX.deck[0] = new MixtrackProFX.Deck(1);
 	MixtrackProFX.deck[1] = new MixtrackProFX.Deck(2);
@@ -22,7 +28,7 @@ MixtrackProFX.init = function(id, debug) {
 	var statusSysex = [0xF0, 0x00, 0x20, 0x7F, 0x03, 0x01, 0xF7];
 	midi.sendSysexMsg(statusSysex, statusSysex.length);
 
-	// initialize channel leds
+	// initialize leds for both decks
 	for(var i = 0; i < 2; i++) {
 		midi.sendShortMsg(0x90 + i, 0x00, 0x01); // play
 		midi.sendShortMsg(0x90 + i, 0x01, 0x01); // cue
@@ -46,6 +52,7 @@ MixtrackProFX.init = function(id, debug) {
 
 	midi.sendShortMsg(0x88, 0x09, 0x01); // tap led
 
+	// check if quantize is enabled
 	var quantizeEnabled = engine.getValue("[Channel1]", "quantize");
 
 	// effect leds
@@ -64,38 +71,14 @@ MixtrackProFX.init = function(id, debug) {
 	engine.makeConnection("[Channel2]", "VuMeter", MixtrackProFX.vuCallback);
 };
 
-// shutdown
 MixtrackProFX.shutdown = function() {
 	var shutdownSysex = [0xF0, 0x00, 0x20, 0x7F, 0x02, 0xF7];
 	midi.sendSysexMsg(shutdownSysex, shutdownSysex.length);
 };
 
-// effect
 MixtrackProFX.EffectUnit = function(unitNumber) {
-	//var eu = this;
 	this.unitNumber = unitNumber;
 	this.group = "[EffectRack1_EffectUnit" + unitNumber + "]";
-
-	/*this.setCurrentUnit = function(newNumber) {
-		this.currentUnitNumber = newNumber;
-		this.group = "[EffectRack1_EffectUnit" + newNumber + "]";
-
-		this.reconnectComponents(function(component) {
-			var unitMatch = component.group.match(script.effectUnitRegEx);
-			if (unitMatch !== null) {
-				component.group = eu.group;
-			} else {
-				var effectMatch = component.group.match(script.individualEffectRegEx);
-				if (effectMatch !== null) {
-					component.group = "[EffectRack1_EffectUnit" +
-					eu.currentUnitNumber +
-					"_Effect" + effectMatch[2] + "]";
-				}
-			}
-		});
-	};
-
-	this.setCurrentUnit(unitNumber);*/
 
 	this.enableButton = new components.Button({
 		input: function(channel, control, value, status, group) {
@@ -230,6 +213,7 @@ MixtrackProFX.Deck = function(number) {
 		});
 	}
 
+	// switch pad mode to hotcue
 	this.modeHotcue = new components.Button({
 		input: function(channel, control, value, status, group) {
 			midi.sendShortMsg(0x90 + channel, 0x00, 0x7F); // hotcue
@@ -250,6 +234,7 @@ MixtrackProFX.Deck = function(number) {
 		}
 	});
 
+	// switch pad mode to auto loop
 	this.modeAutoloop = new components.Button({
 		input: function(channel, control, value, status, group) {
 			midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // hotcue
@@ -294,6 +279,7 @@ MixtrackProFX.Deck = function(number) {
 		}
 	});
 
+	// switch pad mode to sampler
 	this.modeSample = new components.Button({
 		input: function(channel, control, value, status, group) {
 			midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // hotcue
@@ -475,9 +461,6 @@ MixtrackProFX.HeadGain.prototype = new components.Pot({
 	inKey: "headGain"
 });
 
-MixtrackProFX.scratching = [false, false];
-MixtrackProFX.scratchModeEnabled = [true, true];
-
 MixtrackProFX.scratchToggle = function(channel, control, value, status, group) {
 	MixtrackProFX.scratchModeEnabled[channel] = !MixtrackProFX.scratchModeEnabled[channel];
 	midi.sendShortMsg(0x90 | channel, 0x07, MixtrackProFX.scratchModeEnabled[channel] ? 0x7F : 0x01);
@@ -511,6 +494,7 @@ MixtrackProFX.wheelTurn = function (channel, control, value, status, group) {
 
 	if (value >= 64)
 	{
+		// correct the value if going backwards
 		newValue -= 128;
 		backwards = true;
 	}
@@ -523,9 +507,11 @@ MixtrackProFX.wheelTurn = function (channel, control, value, status, group) {
 		else
 			engine.setParameter(group, "beatjump_1_forward", 1);
 	} else if (MixtrackProFX.scratchModeEnabled[channel] && engine.isScratching(deckNumber)) {
-		engine.scratchTick(deckNumber, newValue); // scratch
+		// scratch
+		engine.scratchTick(deckNumber, newValue);
 	} else {
-		engine.setValue(group, "jog", newValue); // pitch bend
+		// pitch bend
+		engine.setValue(group, "jog", newValue);
 	}
 }
 
