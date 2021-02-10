@@ -1,3 +1,8 @@
+// controls annotated with "powerWindow workaround" would normally use
+// powerWindow as type. There's a problem when pressing them and releasing
+// quickly makes them act like toggles, which is quite confusing.
+// the workaround fixes this issue.
+
 var MixtrackProFX = {};
 
 // configure to your liking
@@ -138,12 +143,17 @@ MixtrackProFX.Deck = function(number) {
         inKey: "play_stutter"
     });
 
+    // powerWindow workaround
     this.cueButton = new components.Button({
-        type: components.Button.prototype.types.powerWindow,
         midi: [0x90 + channel, 0x01],
         off: 0x01,
-        inKey: "cue_default",
-        outKey: "cue_indicator"
+        outKey: "cue_indicator",
+        input: function(channel, control, value, status, group) {
+            if (value === 0x7F) {
+                value = 1;
+            }
+            engine.setValue(group, "cue_default", value);
+        }
     });
 
     this.cueButtonShift = new components.Button({
@@ -309,7 +319,6 @@ MixtrackProFX.Deck = function(number) {
     });
 
     this.shiftButton = new components.Button({
-        type: components.Button.prototype.types.powerWindow,
         input: function(channel, control, value, status, group) {
             if (value === 0x7F) {
                 MixtrackProFX.shifted = true;
@@ -362,19 +371,34 @@ MixtrackProFX.Deck = function(number) {
         inKey: "loop_out"
     });
 
+    // powerWindow workaround
     this.bleep = new components.Button({
-        type: components.Button.prototype.types.powerWindow,
-        inKey: "reverseroll"
+        input: function(channel, control, value, status, group) {
+            if (value === 0x7F) {
+                value = 1;
+            }
+            engine.setValue(group, "reverseroll", value);
+        }
     });
 
+    // powerWindow workaround
     this.pitchBendUp = new components.Button({
-        type: components.Button.prototype.types.powerWindow,
-        inKey: "rate_temp_up"
+        input: function(channel, control, value, status, group) {
+            if (value === 0x7F) {
+                value = 1;
+            }
+            engine.setValue(group, "rate_temp_up", value);
+        }
     });
 
+    // powerWindow workaround
     this.pitchBendDown = new components.Button({
-        type: components.Button.prototype.types.powerWindow,
-        inKey: "rate_temp_down"
+        input: function(channel, control, value, status, group) {
+            if (value === 0x7F) {
+                value = 1;
+            }
+            engine.setValue(group, "rate_temp_down", value);
+        }
     });
 
     this.keylock = new components.Button({
