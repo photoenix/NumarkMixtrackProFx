@@ -546,7 +546,7 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group) {
         engine.scratchTick(deckNumber, newValue);
     } else {
         // pitch bend
-        engine.setValue(group, "jog", newValue);
+        engine.setValue(group, "jog", newValue / 10);
     }
 };
 
