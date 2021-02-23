@@ -5,10 +5,17 @@
 
 var MixtrackProFX = {};
 
-// configure to your liking
+// pitch ranges
+// add/remove/modify steps to your liking
+// default must be set in Mixxx settings
 // setting is stored per deck in pitchRange.currentRangeIdx
 MixtrackProFX.pitchRanges = [0.08, 0.16, 1];
 
+// sensitivity for jogwheel pitch
+// bigger number = more sensitive
+MixtrackProFX.jogSensitivity = 10;
+
+// state variables, don't touch
 MixtrackProFX.shifted = false;
 MixtrackProFX.scratching = [false, false];
 MixtrackProFX.scratchModeEnabled = [true, true];
@@ -546,7 +553,7 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group) {
         engine.scratchTick(deckNumber, newValue);
     } else {
         // pitch bend
-        engine.setValue(group, "jog", newValue / 10);
+        engine.setValue(group, "jog", newValue / MixtrackProFX.jogSensitivity);
     }
 };
 
