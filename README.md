@@ -65,5 +65,4 @@ Image: Numark
 * Shift + cue = stop and go to track start
 
 ## Known bugs
-* Starting playback from hotcue or cue button will not "unpause" the deck (play/pause button has to be pressed twice to stop track). I think this is a Mixxx bug and don't really know how to handle this.
-* Pressing shift will disable all lights on a deck. I don't know how to change this behaviour.
+* Pressing shift will disable all lights on a deck.
