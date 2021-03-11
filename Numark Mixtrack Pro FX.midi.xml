@@ -33,6 +33,16 @@
           <normal/>
         </options>
       </control>
+      <!-- Crossfader - 2nd deck fader cuts (don't ask) -->
+      <control>
+        <group>[Master]</group>
+        <key>crossfader</key>
+        <status>0xB1</status>
+        <midino>0x08</midino>
+        <options>
+          <invert/>
+        </options>
+      </control>
       <!-- Gain -->
       <control>
         <group>[Channel1]</group>
@@ -420,6 +430,24 @@
         <key>MixtrackProFX.deck[1].modeAutoloop.input</key>
         <status>0x95</status>
         <midino>0x0D</midino>
+        <options>
+          <script-binding/>
+        </options>
+      </control>
+      <control>
+        <group>[Channel1]</group>
+        <key>MixtrackProFX.deck[0].modeFadercuts.input</key>
+        <status>0x94</status>
+        <midino>0x07</midino>
+        <options>
+          <script-binding/>
+        </options>
+      </control>
+      <control>
+        <group>[Channel2]</group>
+        <key>MixtrackProFX.deck[1].modeFadercuts.input</key>
+        <status>0x95</status>
+        <midino>0x07</midino>
         <options>
           <script-binding/>
         </options>

@@ -50,7 +50,7 @@ MixtrackProFX.init = function(id, debug) {
 
         midi.sendShortMsg(0x94 + i, 0x00, 0x7F); // hotcue
         midi.sendShortMsg(0x94 + i, 0x0D, 0x01); // auto loop
-        //midi.sendShortMsg(0x94 + i, 0x07, 0x01); // fader cuts
+        midi.sendShortMsg(0x94 + i, 0x07, 0x01); // fader cuts
         midi.sendShortMsg(0x94 + i, 0x0B, 0x01); // sample
 
         midi.sendShortMsg(0x94 + i, 0x34, 0x01); // half
@@ -246,6 +246,7 @@ MixtrackProFX.Deck = function(number) {
         input: function(channel, control, value, status, group) {
             midi.sendShortMsg(0x90 + channel, 0x00, 0x7F); // hotcue
             midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
+            midi.sendShortMsg(0x90 + channel, 0x07, 0x01); // fader cuts
             midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
 
             for (var i = 0; i < 8; i++) {
@@ -266,6 +267,7 @@ MixtrackProFX.Deck = function(number) {
         input: function(channel, control, value, status, group) {
             midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // hotcue
             midi.sendShortMsg(0x90 + channel, 0x0D, 0x7F); // auto loop
+            midi.sendShortMsg(0x90 + channel, 0x07, 0x01); // fader cuts
             midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
 
             // this is just sad
@@ -297,8 +299,30 @@ MixtrackProFX.Deck = function(number) {
 
             for (var i = 0; i < 8; i++) {
                 deck.pads[i].group = deck.currentDeck;
-
                 deck.padsShift[i].group = deck.currentDeck;
+            }
+
+            deck.pads.reconnectComponents();
+        }
+    });
+
+    // switch pad mode to fader cuts
+    this.modeFadercuts = new components.Button({
+        input: function(channel, control, value, status, group) {
+            midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // hotcue
+            midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
+            midi.sendShortMsg(0x90 + channel, 0x07, 0x09); // fader cuts (yes 0x09 works the best for some reason)
+            midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
+
+            // the "fader cuts" function is somehow burned into hardware
+
+            // need to set the pads to *something* to not trigger controls
+            // triggered previously by the pads and not display their status (e.g. hotcue set)
+            // nop would be really useful in this situation
+            // we can assume channel 4 is unused and therefore won't mess anything up
+            for (var i = 0; i < 8; i++) {
+                deck.pads[i].group = "[Channel4]";
+                deck.padsShift[i].group = "[Channel4]";
             }
 
             deck.pads.reconnectComponents();
@@ -310,6 +334,7 @@ MixtrackProFX.Deck = function(number) {
         input: function(channel, control, value, status, group) {
             midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // hotcue
             midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
+            midi.sendShortMsg(0x90 + channel, 0x07, 0x01); // fader cuts
             midi.sendShortMsg(0x90 + channel, 0x0B, 0x7F); // sample
 
             for (var i = 0; i < 8; i++) {

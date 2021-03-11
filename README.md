@@ -22,10 +22,10 @@ Image: Numark
   * Key lock
   * Pitch range (ranges configurable in first lines of the script, by default: 8%, 16%, 100%)
 * Pads
-  * Hotcues
-  * Delete hotcues
-  * Samples
+  * Hotcues + delete hotcues
   * Auto loop
+  * Fader cuts
+  * Sampler
 * Knobs
   * Master gain
   * Mic gain
@@ -46,7 +46,6 @@ Image: Numark
 * FX on/off
 
 ## Not working
-* Fader cuts
 * Reset BPM (shift + tap)
 
 ## FX select buttons
@@ -66,3 +65,4 @@ Image: Numark
 
 ## Known bugs
 * Pressing shift will disable all lights on a deck.
+* Fader cuts button's light in active state is a little darker than other buttons. This is because the whole fader cuts function is somehow burned into the hardware, and pressing this button causes some very strange things to happen. If you try setting this button's light to 0x7F, nearby buttons (cue and auto loop) will also get brighter for some reason. If the light is darker, this doesn't happen.
