@@ -40,6 +40,10 @@ MixtrackProFX.init = function(id, debug) {
     var statusSysex = [0xF0, 0x00, 0x20, 0x7F, 0x03, 0x01, 0xF7];
     midi.sendSysexMsg(statusSysex, statusSysex.length);
 
+    // enables 4 bottom pads fader cuts
+    var faderCutSysex = [0xF0, 0x00, 0x20, 0x7F, 0x03, 0xF7];
+    midi.sendSysexMsg(faderCutSysex, faderCutSysex.length);
+
     // initialize leds for both decks
     for (var i = 0; i < 2; i++) {
         midi.sendShortMsg(0x90 + i, 0x00, 0x01); // play
