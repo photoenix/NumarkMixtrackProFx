@@ -17,7 +17,6 @@ MixtrackProFX.jogSensitivity = 10;
 
 // state variables, don't touch
 MixtrackProFX.shifted = false;
-MixtrackProFX.scratching = [false, false];
 MixtrackProFX.scratchModeEnabled = [true, true];
 
 MixtrackProFX.init = function(id, debug) {
@@ -550,11 +549,9 @@ MixtrackProFX.wheelTouch = function(channel, control, value, status, group) {
         var beta = alpha/32;
 
         engine.scratchEnable(deckNumber, 2048, 33+1/3, alpha, beta);
-        MixtrackProFX.scratching[channel] = true;
     } else if (value === 0) {
         // touch end
         engine.scratchDisable(deckNumber);
-        MixtrackProFX.scratching[channel] = false;
     }
 };
 
