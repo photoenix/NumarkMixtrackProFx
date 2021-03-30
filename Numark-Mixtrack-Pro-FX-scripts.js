@@ -11,9 +11,10 @@ var MixtrackProFX = {};
 // setting is stored per deck in pitchRange.currentRangeIdx
 MixtrackProFX.pitchRanges = [0.08, 0.16, 1];
 
-// sensitivity for jogwheel pitch
+// jogwheel sensitivity
 // bigger number = more sensitive
-MixtrackProFX.jogSensitivity = 10;
+MixtrackProFX.jogScratchSensitivity = 4096;
+MixtrackProFX.jogPitchSensitivity = 10;
 
 // state variables, don't touch
 MixtrackProFX.shifted = false;
@@ -548,10 +549,10 @@ MixtrackProFX.wheelTouch = function(channel, control, value, status, group) {
         var alpha = 1.0/8;
         var beta = alpha/32;
 
-        engine.scratchEnable(deckNumber, 2048, 33+1/3, alpha, beta);
+        engine.scratchEnable(deckNumber, MixtrackProFX.jogScratchSensitivity, 33+1/3, alpha, beta, true);
     } else if (value === 0) {
         // touch end
-        engine.scratchDisable(deckNumber);
+        engine.scratchDisable(deckNumber, true);
     }
 };
 
@@ -579,7 +580,7 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group) {
         engine.scratchTick(deckNumber, newValue);
     } else {
         // pitch bend
-        engine.setValue(group, "jog", newValue / MixtrackProFX.jogSensitivity);
+        engine.setValue(group, "jog", newValue / MixtrackProFX.jogPitchSensitivity);
     }
 };
 
