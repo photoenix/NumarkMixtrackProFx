@@ -7,13 +7,14 @@ var MixtrackProFX = {};
 
 // pitch ranges
 // add/remove/modify steps to your liking
-// default must be set in Mixxx settings
+// default step must be set in Mixxx settings
 // setting is stored per deck in pitchRange.currentRangeIdx
 MixtrackProFX.pitchRanges = [0.08, 0.16, 1];
 
-// jogwheel sensitivity
-// bigger number = more sensitive
-MixtrackProFX.jogScratchSensitivity = 4096;
+// jogwheel
+MixtrackProFX.jogScratchSensitivity = 1024;
+MixtrackProFX.jogScratchAlpha = 1; // do NOT set to 2 or higher
+MixtrackProFX.jogScratchBeta = 1/32;
 MixtrackProFX.jogPitchSensitivity = 10;
 
 // state variables, don't touch
@@ -546,10 +547,8 @@ MixtrackProFX.wheelTouch = function(channel, control, value, status, group) {
 
     if (MixtrackProFX.scratchModeEnabled[channel] && value === 0x7F) {
         // touch start
-        var alpha = 1.0/8;
-        var beta = alpha/32;
 
-        engine.scratchEnable(deckNumber, MixtrackProFX.jogScratchSensitivity, 33+1/3, alpha, beta, true);
+        engine.scratchEnable(deckNumber, MixtrackProFX.jogScratchSensitivity, 33+1/3, MixtrackProFX.jogScratchAlpha, MixtrackProFX.jogScratchBeta, true);
     } else if (value === 0) {
         // touch end
         engine.scratchDisable(deckNumber, true);
