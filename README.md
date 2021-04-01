@@ -1,5 +1,7 @@
 An unofficial mapping for the [Numark Mixtrack Pro FX](https://www.numark.com/product/mixtrack-pro-fx) for [Mixxx](https://mixxx.org/) 2.2.4, based on the mapping by bad1dea5.
 
+[Discussion](https://mixxx.discourse.group/t/numark-mixtrack-pro-fx/19561)
+
 ![Pro FX photo](https://www.numark.com/images/product_large/Numark_MixtrackProFX_ortho_web.jpg)
 Image: Numark
 
@@ -62,6 +64,9 @@ Image: Numark
 * Shift + sample = stop sample playback
 * Shift + play = stutter
 * Shift + cue = stop and go to track start
+
+## Fine-tuning
+There's a few configurable values at the top of the script, including jogwheel sensitivity and pitch ranges.
 
 ## Known bugs
 * Pressing shift will disable all lights on a deck.
