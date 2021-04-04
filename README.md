@@ -68,6 +68,9 @@ Image: Numark
 ## Fine-tuning
 There's a few configurable values at the top of the script, including jogwheel sensitivity and pitch ranges.
 
+## Notes
+* Pressing either Shift button will cause both decks to shift. This approach was chosen to be consistent with the behavior of hardware - i.e. pressing either Shift changes midi codes of some controls on both decks.
+
 ## Known bugs
 * Pressing shift will disable all lights on a deck.
 * Fader cuts button's light in active state is a little darker than other buttons. This is because the whole fader cuts function is somehow burned into the hardware, and pressing this button causes some very strange things to happen. If you try setting this button's light to 0x7F, nearby buttons (cue and auto loop) will also get brighter for some reason. If the light is darker, this doesn't happen.

@@ -357,14 +357,18 @@ MixtrackProFX.Deck = function(number) {
 
     this.shiftButton = new components.Button({
         input: function(channel, control, value, status, group) {
+            // each shift button shifts both decks
+            // more consistent with the logic burned into hardware
             if (value === 0x7F) {
                 MixtrackProFX.shifted = true;
-                deck.shift();
+                MixtrackProFX.deck[0].shift();
+                MixtrackProFX.deck[1].shift();
                 MixtrackProFX.browse.shift();
                 MixtrackProFX.effect.shift();
             } else if (value === 0) {
                 MixtrackProFX.shifted = false;
-                deck.unshift();
+                MixtrackProFX.deck[0].unshift();
+                MixtrackProFX.deck[1].unshift();
                 MixtrackProFX.browse.unshift();
                 MixtrackProFX.effect.unshift();
             }
