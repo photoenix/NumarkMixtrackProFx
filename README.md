@@ -56,6 +56,8 @@ Image: Numark
 |----------------------|--------------------------|--------------------------|
 | ~Echo~ deck 1 FX up  | ~Reverb~ quantize toggle | ~Phaser~ deck 2 FX up    |
 
+Adjust beatgrid sets beatgrid on deck 1. Shift to set on deck 2.
+
 ## Bonus functions
 * Shift + browse knob scroll = zoom in/out wave display
 * Shift + browse knob press = select item (collapse/extend tree or load track)

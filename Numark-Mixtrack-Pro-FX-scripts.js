@@ -476,12 +476,6 @@ MixtrackProFX.Deck = function(number) {
         off: 0x01
     });
 
-    this.setBeatgrid = new components.Button({
-        key: "beats_translate_curpos",
-        midi: [0x88, 0x01],
-        off: 0x01
-    });
-
     this.reconnectComponents(function(component) {
         if (component.group === undefined) {
             component.group = this.currentDeck;
@@ -523,6 +517,19 @@ MixtrackProFX.Browse = function() {
     this.buttonShift = new components.Button({
         group: "[Library]",
         inKey: "GoToItem"
+    });
+
+    this.setBeatgrid = new components.Button({
+        group: "[Channel1]",
+        key: "beats_translate_curpos",
+        midi: [0x88, 0x01],
+        off: 0x01,
+        shift: function() {
+            this.group = "[Channel2]";
+        },
+        unshift: function() {
+            this.group = "[Channel1]";
+        }
     });
 };
 
