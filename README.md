@@ -63,15 +63,13 @@ Adjust beatgrid sets beatgrid on deck 1. Shift to set on deck 2.
 * Shift + browse knob press = select item (collapse/extend tree or load track)
 * Shift + FX param knob = FX param2
 * Shift + load = load track to preview deck
-* Shift + sample = stop sample playback
 * Shift + play = stutter
 * Shift + cue = stop and go to track start
 
-## Fine-tuning
-There's a few configurable values at the top of the script, including jogwheel sensitivity and pitch ranges.
-
 ## Notes
-* Pressing either Shift button will cause both decks to shift. This approach was chosen to be consistent with the behavior of hardware - i.e. pressing either Shift changes midi codes of some controls on both decks.
+* Fine-tuning - there's a few configurable values at the top of the script, including jogwheel sensitivity and pitch ranges.
+* Pressing either Shift button will cause both decks to shift. This approach was chosen to be consistent with the behavior of hardware - i.e. pressing either Shift changes midi codes of some controls on *both* decks.
+* There were reports of unresponsive scratching (comparing with the original code from bad1dea5's mapping). At the end of the script there are two alternate versions of scratch logic - choose one which works best for you.
 
 ## Known bugs
 * Pressing shift will disable all lights on a deck.
