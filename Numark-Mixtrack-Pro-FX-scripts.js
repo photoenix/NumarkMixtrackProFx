@@ -389,7 +389,7 @@ MixtrackProFX.Deck = function(number) {
     });
 
     this.reloop = new components.Button({
-        inKey: "loop_in_goto"
+        inKey: "reloop_toggle" // or loop_in_goto to not enable loop
     });
 
     this.loopHalf = new components.Button({
