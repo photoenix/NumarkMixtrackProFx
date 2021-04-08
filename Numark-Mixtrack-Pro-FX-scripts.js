@@ -575,21 +575,25 @@ MixtrackProFX.wheelTurn = function(channel, control, value, status, group) {
     var deckNumber = channel + 1;
 
     var newValue = value;
-    var backwards = false;
 
     if (value >= 64) {
         // correct the value if going backwards
         newValue -= 128;
-        backwards = true;
     }
 
     if (MixtrackProFX.shifted) {
         // seek
-        if (backwards) {
-            engine.setParameter(group, "beatjump_1_backward", 1);
-        } else {
-            engine.setParameter(group, "beatjump_1_forward", 1);
+        var oldPos = engine.getValue(group, "playposition");
+
+        if (oldPos <= 0) {
+            oldPos = 0;
         }
+
+        if (oldPos >= 1) {
+            oldPos = 1;
+        }
+
+        engine.setValue(group, "playposition", oldPos + newValue / MixtrackProFX.jogSeekSensitivity);
     } else if (MixtrackProFX.scratchModeEnabled[channel] && engine.isScratching(deckNumber)) {
         // scratch
         engine.scratchTick(deckNumber, newValue);
