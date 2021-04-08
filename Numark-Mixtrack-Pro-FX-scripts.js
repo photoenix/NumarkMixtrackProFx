@@ -557,11 +557,7 @@ MixtrackProFX.scratchToggle = function(channel, control, value, status, group) {
 MixtrackProFX.wheelTouch = function(channel, control, value, status, group) {
     var deckNumber = channel + 1;
 
-    if (MixtrackProFX.shifted) {
-        return; // seeking
-    }
-
-    if (MixtrackProFX.scratchModeEnabled[channel] && value === 0x7F) {
+    if (!MixtrackProFX.shifted && MixtrackProFX.scratchModeEnabled[channel] && value === 0x7F) {
         // touch start
 
         engine.scratchEnable(deckNumber, MixtrackProFX.jogScratchSensitivity, 33+1/3, MixtrackProFX.jogScratchAlpha, MixtrackProFX.jogScratchBeta, true);
