@@ -545,6 +545,22 @@ MixtrackProFX.HeadGain.prototype = new components.Pot({
     inKey: "headGain"
 });
 
+MixtrackProFX.vuCallback = function(value, group, control) {
+    var level = value * 90;
+
+    if (engine.getValue("[Channel1]", "pfl") || engine.getValue("[Channel2]", "pfl")) {
+        if (group === "[Channel1]") {
+            midi.sendShortMsg(0xB0, 0x1F, level);
+        } else if (group === "[Channel2]") {
+            midi.sendShortMsg(0xB1, 0x1F, level);
+        }
+    } else if (group === "[Channel1]") {
+        midi.sendShortMsg(0xB0, 0x1F, level);
+    } else if (group === "[Channel2]") {
+        midi.sendShortMsg(0xB1, 0x1F, level);
+    }
+};
+
 MixtrackProFX.scratchToggle = function(channel, control, value, status, group) {
     MixtrackProFX.scratchModeEnabled[channel] = !MixtrackProFX.scratchModeEnabled[channel];
     midi.sendShortMsg(0x90 | channel, 0x07, MixtrackProFX.scratchModeEnabled[channel] ? 0x7F : 0x01);
@@ -748,19 +764,3 @@ MixtrackProFX.wheelTouch = function(channel, control, value, status, group) {
 };*/
 
 // ==== SCRATCH B END ==== //
-
-MixtrackProFX.vuCallback = function(value, group, control) {
-    var level = value * 90;
-
-    if (engine.getValue("[Channel1]", "pfl") || engine.getValue("[Channel2]", "pfl")) {
-        if (group === "[Channel1]") {
-            midi.sendShortMsg(0xB0, 0x1F, level);
-        } else if (group === "[Channel2]") {
-            midi.sendShortMsg(0xB1, 0x1F, level);
-        }
-    } else if (group === "[Channel1]") {
-        midi.sendShortMsg(0xB0, 0x1F, level);
-    } else if (group === "[Channel2]") {
-        midi.sendShortMsg(0xB1, 0x1F, level);
-    }
-};
