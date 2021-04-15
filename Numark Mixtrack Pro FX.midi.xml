@@ -2,7 +2,7 @@
 <MixxxControllerPreset schemaVersion="1" mixxxVersion="2.1.0+">
   <info>
     <name>Numark Mixtrack Pro FX</name>
-    <author>bad1dea5, h67ma</author>
+    <author>bad1dea5, h67ma, photoenix</author>
     <description>Mapping for the Numark Mixtrack Pro FX</description>
     <forums>https://mixxx.discourse.group/t/numark-mixtrack-pro-fx/19561</forums>
   </info>
@@ -466,6 +466,42 @@
         <key>MixtrackProFX.deck[1].modeSample.input</key>
         <status>0x95</status>
         <midino>0x0B</midino>
+        <options>
+          <script-binding/>
+        </options>
+      </control>
+      <control>
+        <group>[Channel1]</group>
+        <key>MixtrackProFX.deck[0].modeSampleShift.input</key>
+        <status>0x94</status>
+        <midino>0x0F</midino>
+        <options>
+          <script-binding/>
+        </options>
+      </control>
+      <control>
+        <group>[Channel2]</group>
+        <key>MixtrackProFX.deck[1].modeSampleShift.input</key>
+        <status>0x95</status>
+        <midino>0x0F</midino>
+        <options>
+          <script-binding/>
+        </options>
+      </control>
+	  <control>
+        <group>[Channel1]</group>
+        <key>MixtrackProFX.deck[0].modeBeatjump.input</key>
+        <status>0x94</status>
+        <midino>0x02</midino>
+        <options>
+          <script-binding/>
+        </options>
+      </control>
+      <control>
+        <group>[Channel2]</group>
+        <key>MixtrackProFX.deck[1].modeBeatjump.input</key>
+        <status>0x95</status>
+        <midino>0x02</midino>
         <options>
           <script-binding/>
         </options>

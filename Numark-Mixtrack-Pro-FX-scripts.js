@@ -63,9 +63,21 @@ MixtrackProFX.init = function(id, debug) {
         midi.sendShortMsg(0x94 + i, 0x35, 0x01); // double
         midi.sendShortMsg(0x94 + i, 0x40, 0x01); // loop
 
+        // initialize leds for shifted buttons
+        midi.sendShortMsg(0x90 + i, 0x04, 0x01); // play
+        midi.sendShortMsg(0x90 + i, 0x05, 0x01); // cue
+        midi.sendShortMsg(0x90 + i, 0x03, 0x01); // sync
+        midi.sendShortMsg(0x94 + i, 0x0F, 0x01); // sample shifted
+        midi.sendShortMsg(0x94 + i, 0x02, 0x01); // beatjump
+        midi.sendShortMsg(0x90 + i, 0x08, 0x01); // bleep
+        midi.sendShortMsg(0x94 + i, 0x36, 0x01); // half
+        midi.sendShortMsg(0x94 + i, 0x37, 0x01); // double
+        midi.sendShortMsg(0x94 + i, 0x41, 0x01); // loop
+
         // pads
         for (var j = 0; j < 8; j++) {
             midi.sendShortMsg(0x94 + i, 0x14 + j, 0x01);
+            midi.sendShortMsg(0x94 + i, 0x1C + j, 0x01); // shifted
         }
     }
 
@@ -254,6 +266,8 @@ MixtrackProFX.Deck = function(number) {
             midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
             midi.sendShortMsg(0x90 + channel, 0x07, 0x01); // fader cuts
             midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
+            midi.sendShortMsg(0x90 + channel, 0x0F, 0x01); // sample shifted
+            midi.sendShortMsg(0x90 + channel, 0x02, 0x01); // beatjump
 
             for (var i = 0; i < 8; i++) {
                 deck.pads[i].group = deck.currentDeck;
@@ -275,6 +289,8 @@ MixtrackProFX.Deck = function(number) {
             midi.sendShortMsg(0x90 + channel, 0x0D, 0x7F); // auto loop
             midi.sendShortMsg(0x90 + channel, 0x07, 0x01); // fader cuts
             midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
+            midi.sendShortMsg(0x90 + channel, 0x0F, 0x01); // sample shifted
+            midi.sendShortMsg(0x90 + channel, 0x02, 0x01); // beatjump
 
             // this is just sad
             deck.pads[0].inKey = "beatloop_0.0625_toggle";
@@ -319,6 +335,8 @@ MixtrackProFX.Deck = function(number) {
             midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
             midi.sendShortMsg(0x90 + channel, 0x07, 0x09); // fader cuts (yes 0x09 works the best for some reason)
             midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
+            midi.sendShortMsg(0x90 + channel, 0x0F, 0x01); // sample shifted
+            midi.sendShortMsg(0x90 + channel, 0x02, 0x01); // beatjump
 
             // the "fader cuts" function is somehow burned into hardware
 
@@ -342,6 +360,8 @@ MixtrackProFX.Deck = function(number) {
             midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
             midi.sendShortMsg(0x90 + channel, 0x07, 0x01); // fader cuts
             midi.sendShortMsg(0x90 + channel, 0x0B, 0x7F); // sample
+            midi.sendShortMsg(0x90 + channel, 0x0F, 0x01); // sample shifted
+            midi.sendShortMsg(0x90 + channel, 0x02, 0x01); // beatjump
 
             for (var i = 0; i < 8; i++) {
                 deck.pads[i].group = "[Sampler" + (i + 1) + "]";
@@ -355,7 +375,68 @@ MixtrackProFX.Deck = function(number) {
             deck.pads.reconnectComponents();
         }
     });
+    
+    // switch pad mode to shifted sampler
+    this.modeSampleShift = new components.Button({
+        input: function(channel, control, value, status, group) {
+            midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // hotcue
+            midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
+            midi.sendShortMsg(0x90 + channel, 0x07, 0x01); // fader cuts
+            midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
+            midi.sendShortMsg(0x90 + channel, 0x0F, 0x7F); // sample shifted
+            midi.sendShortMsg(0x90 + channel, 0x02, 0x01); // beatjump
 
+            for (var i = 0; i < 8; i++) {
+                deck.pads[i].group = "[Sampler" + (i + 9) + "]";
+                deck.pads[i].inKey = "cue_gotoandplay";
+                deck.pads[i].outKey = "play";
+
+                deck.padsShift[i].group = "[Sampler" + (i + 9) + "]";
+                deck.padsShift[i].inKey = "start_stop";
+            }
+
+            deck.pads.reconnectComponents();
+        }
+    });
+    
+    // switch pad mode to beatjump
+    this.modeBeatjump = new components.Button({
+        input: function(channel, control, value, status, group) {
+            midi.sendShortMsg(0x90 + channel, 0x00, 0x01); // hotcue            
+            midi.sendShortMsg(0x90 + channel, 0x0D, 0x01); // auto loop
+            midi.sendShortMsg(0x90 + channel, 0x07, 0x01); // fader cuts
+            midi.sendShortMsg(0x90 + channel, 0x0B, 0x01); // sample
+            midi.sendShortMsg(0x90 + channel, 0x0F, 0x01); // sample shifted
+            midi.sendShortMsg(0x90 + channel, 0x02, 0x7F); // beatjump
+
+            // this is just sad
+            deck.pads[0].inKey = "beatjump_0.0625_forward";
+            deck.pads[1].inKey = "beatjump_0.125_forward";
+            deck.pads[2].inKey = "beatjump_0.25_forward";
+            deck.pads[3].inKey = "beatjump_0.5_forward";
+            deck.pads[4].inKey = "beatjump_1_forward";
+            deck.pads[5].inKey = "beatjump_2_forward";
+            deck.pads[6].inKey = "beatjump_forward"; // this button is adjustable, it uses the value set in the interface (4 by default) 
+            deck.pads[7].inKey = "beatjump_8_forward";
+
+            deck.padsShift[0].inKey = "beatjump_0.0625_backward";
+            deck.padsShift[1].inKey = "beatjump_0.125_backward";
+            deck.padsShift[2].inKey = "beatjump_0.25_backward";
+            deck.padsShift[3].inKey = "beatjump_0.5_backward";
+            deck.padsShift[4].inKey = "beatjump_1_backward";
+            deck.padsShift[5].inKey = "beatjump_2_backward";
+            deck.padsShift[6].inKey = "beatjump_backward"; // this button is adjustable, it uses the value set in the interface (4 by default) 
+            deck.padsShift[7].inKey = "beatjump_8_backward";
+
+            for (var i = 0; i < 8; i++) {
+                deck.pads[i].group = deck.currentDeck;
+                deck.padsShift[i].group = deck.currentDeck;
+            }
+
+            deck.pads.reconnectComponents();
+        }
+    });
+    
     this.shiftButton = new components.Button({
         input: function(channel, control, value, status, group) {
             // each shift button shifts both decks

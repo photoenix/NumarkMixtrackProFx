@@ -28,6 +28,8 @@ Image: Numark
   * Auto loop
   * Fader cuts
   * Sampler
+  * Sampler 2
+  * Beatjump
 * Knobs
   * Master gain
   * Mic gain
@@ -65,6 +67,12 @@ Adjust beatgrid sets beatgrid on deck 1. Shift to set on deck 2.
 * Shift + load = load track to preview deck
 * Shift + play = stutter
 * Shift + cue = stop and go to track start
+* Shift + Hotcue = Beatjump
+* Shift + Sampler = Sampler 2 (Samples 9-16)
+
+## Beatjump
+* Pads: Beatjump forward (1/16, 1/8, 1/4, 1/2, 1, 2, value set in mixxx(4 by default), 8)
+* Shift + Pads: Beatjump backward (1/16, 1/8, 1/4, 1/2, 1, 2, value set in mixxx(4 by default), 8)
 
 ## Notes
 * Fine-tuning - there's a few configurable values at the top of the script, including jogwheel sensitivity and pitch ranges.
@@ -72,5 +80,5 @@ Adjust beatgrid sets beatgrid on deck 1. Shift to set on deck 2.
 * There were reports of unresponsive scratching (comparing with the original code from bad1dea5's mapping). At the end of the script there are two alternate versions of scratch logic - choose one which works best for you.
 
 ## Known bugs
-* Pressing shift will disable all lights on a deck.
+* Shift can't be used with Auto loop + Fader cuts buttons, since it doesn't seem to have a MIDI control.
 * Fader cuts button's light in active state is a little darker than other buttons. This is because the whole fader cuts function is somehow burned into the hardware, and pressing this button causes some very strange things to happen. If you try setting this button's light to 0x7F, nearby buttons (cue and auto loop) will also get brighter for some reason. If the light is darker, this doesn't happen.
